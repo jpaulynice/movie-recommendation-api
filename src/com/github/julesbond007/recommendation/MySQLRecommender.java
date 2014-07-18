@@ -20,7 +20,7 @@ public class MySQLRecommender {
 		try {
 			MysqlDataSource dataSource = new MysqlDataSource();
 			dataSource.setUrl("jdbc:mysql://localhost/recommendationdb");
-			dataSource.setServerName("3306");
+			dataSource.setPort(3306);
 			dataSource.setUser("root");
 			dataSource.setPassword("jodisoft");
 
