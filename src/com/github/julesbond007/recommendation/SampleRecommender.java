@@ -19,13 +19,16 @@ public class SampleRecommender {
     public static void main(String[] args) {
         try {
             DataModel model = new FileDataModel(
-                    new File("/Users/julespaulynice/Documents/luna/apache-mahout-recommendation-examples/dataset.csv"));
+                    new File("/dataset.csv"));
             UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
-            UserNeighborhood neighborhood = new ThresholdUserNeighborhood(0.1, similarity, model);
+            UserNeighborhood neighborhood =
+                    new ThresholdUserNeighborhood(0.1, similarity, model);
 
-            UserBasedRecommender recommender = new GenericUserBasedRecommender(model, neighborhood, similarity);
+            UserBasedRecommender recommender =
+                    new GenericUserBasedRecommender(model, neighborhood, similarity);
 
-            List<RecommendedItem> recommendations = (List<RecommendedItem>) recommender.recommend(2, 3);
+            List<RecommendedItem> recommendations =
+                    (List<RecommendedItem>) recommender.recommend(2, 3);
             for (RecommendedItem recommendation : recommendations) {
                 System.out.println(recommendation);
             }
