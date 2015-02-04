@@ -18,17 +18,14 @@ public class MySQLRecommender {
 
     public static void main(String[] args) {
         try {
-            MysqlDataSource dataSource = new MysqlDataSource();
-            dataSource.setUrl("jdbc:mysql://localhost/recommendationdb");
-            dataSource.setPort(3306);
-            dataSource.setUser("root");
-            dataSource.setPassword("jodisoft");
+            MysqlDataSource dataSource = getDatasource();
 
             DataModel model = new MySQLBooleanPrefJDBCDataModel(dataSource);
 
             ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(dataSource);
             AllSimilarItemsCandidateItemsStrategy candidateStrategy =
                     new AllSimilarItemsCandidateItemsStrategy(similarity);
+                    
             ItemBasedRecommender recommender = new GenericItemBasedRecommender(model,
                     similarity, candidateStrategy, candidateStrategy);
 
@@ -41,6 +38,15 @@ public class MySQLRecommender {
         } catch (TasteException e) {
             e.printStackTrace();
         }
-
+    }
+    
+    private Datasource getDatasource(){
+        MysqlDataSource dataSource = new MysqlDataSource();
+        dataSource.setUrl("jdbc:mysql://localhost/recommendationdb");
+        dataSource.setPort(3306);
+        dataSource.setUser("root");
+        dataSource.setPassword("jodisoft");
+        
+        return dataSource;
     }
 }
