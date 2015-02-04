@@ -19,10 +19,9 @@ public class MySQLRecommender {
     public static void main(String[] args) {
         try {
             MysqlDataSource dataSource = getDatasource();
-
             DataModel model = new MySQLBooleanPrefJDBCDataModel(dataSource);
-
             ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(dataSource);
+
             AllSimilarItemsCandidateItemsStrategy candidateStrategy =
                     new AllSimilarItemsCandidateItemsStrategy(similarity);
                     
@@ -31,6 +30,7 @@ public class MySQLRecommender {
 
             List<RecommendedItem> recommendations =
                     (List<RecommendedItem>) recommender.recommend(2, 3);
+
             for (RecommendedItem recommendation : recommendations) {
                 System.out.println(recommendation);
             }
@@ -40,7 +40,7 @@ public class MySQLRecommender {
         }
     }
     
-    private Datasource getDatasource(){
+    private static Datasource getDatasource(){
         MysqlDataSource dataSource = new MysqlDataSource();
         dataSource.setUrl("jdbc:mysql://localhost/recommendationdb");
         dataSource.setPort(3306);

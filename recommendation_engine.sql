@@ -2,7 +2,7 @@ DROP DATABASE if exists recommendationdb;
 CREATE DATABASE recommendationdb; 
   USE recommendationdb; 
   
-  /*create items tables*/
+  --create items tables
   CREATE TABLE items (
      item_id INTEGER NOT NULL AUTO_INCREMENT, 
      name varchar (100) NOT NULL, 
@@ -10,7 +10,7 @@ CREATE DATABASE recommendationdb;
      PRIMARY KEY (item_id) 
   ); 
 
-  /*create users table*/
+  --create users table
   CREATE TABLE users ( 
 	 user_id INTEGER NOT NULL AUTO_INCREMENT,
      name varchar (50) NOT NULL, 
@@ -18,7 +18,7 @@ CREATE DATABASE recommendationdb;
      PRIMARY KEY (user_id) 
   ); 
 
-  /*create taste_preferences table table*/
+  --create taste_preferences table table
   CREATE TABLE taste_preferences (
 	 user_id INTEGER NOT NULL, 
      item_id INTEGER NOT NULL, 
@@ -28,7 +28,7 @@ CREATE DATABASE recommendationdb;
      FOREIGN KEY (item_id) REFERENCES Items (item_id) ON DELETE CASCADE 
   ); 
 
-  /*create taste_item_similarity table*/
+  --create taste_item_similarity table
   CREATE TABLE taste_item_similarity (
 	 item_id_a INTEGER NOT NULL, 
      item_id_b INTEGER NOT NULL, 
@@ -41,7 +41,7 @@ CREATE DATABASE recommendationdb;
   CREATE INDEX item_preferences_index2 ON taste_preferences (user_id); 
   CREATE INDEX item_preferences_index3 ON taste_preferences (item_id);
 
-/*populate users*/
+--populate users
 insert into users (name,email) values ('jay','jay.paulynice@gmail.com');
 insert into users (name,email) values ('nate','nate.paulynice@gmail.com');
 insert into users (name,email) values ('aiden','aiden.paulynice@gmail.com');
@@ -49,7 +49,7 @@ insert into users (name,email) values ('mella','mella.paulynice@gmail.com');
 insert into users (name,email) values ('me','me.paulynice@gmail.com');
 
 
-/*populate items*/
+--populate items
 insert into items (name,type) values('captain america','movie');
 insert into items (name,type) values('iron man','movie');
 insert into items (name,type) values('rambo','movie');
@@ -58,7 +58,7 @@ insert into items (name,type) values('cars','movie');
 insert into items (name,type) values('planes','movie');
 
 
-/*populate user preferences*/
+--populate user preferences
 insert into taste_preferences (user_id,item_id,preference) values (1,1,1);
 insert into taste_preferences (user_id,item_id,preference) values (2,2,0);
 insert into taste_preferences (user_id,item_id,preference) values (3,3,0);
@@ -73,7 +73,7 @@ insert into taste_preferences (user_id,item_id,preference) values (1,3,1);
 insert into taste_preferences (user_id,item_id,preference) values (1,6,1);
 
 
-/*populate item similarity*/
+--populate item similarity
 insert into taste_item_similarity (item_id_a,item_id_b,similarity) values (1,2,1);
 insert into taste_item_similarity (item_id_a,item_id_b,similarity) values (1,3,1);
 insert into taste_item_similarity (item_id_a,item_id_b,similarity) values (1,4,0);
