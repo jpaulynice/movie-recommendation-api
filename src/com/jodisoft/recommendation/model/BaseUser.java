@@ -1,5 +1,9 @@
 package com.jodisoft.recommendation.model;
 
+/**
+ * @author Jay Paulynice
+ *
+ */
 public class BaseUser {
     private int id;
     private String firstName;
