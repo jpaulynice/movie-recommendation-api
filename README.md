@@ -2,6 +2,14 @@ Movie Recommendation Engine
 =====================================
 A simple movie recommendation engine based on Apache Mahout.  This is a Spring application with persistence provided by Spring Data/Hibernate/JPA.  Although it's a simple application, it is a real world recommendation engine with data stored in 2 formats:
 MySQL database and CSV file.
+
+The idea is simple given:
+    1. A list of users
+    2. A list of movies
+    3. Similarities between movie 1 and movie 2
+    4. User's preferene for each movie
+
+We recommend a set of movies that the user would enjoy.
 <br/>
 <br/>
 <b>Interface:</b>
