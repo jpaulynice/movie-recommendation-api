@@ -1,6 +1,6 @@
 Movie Recommendation Engine
 =====================================
-A simple movie recommendation engine based on Apache Mahout.  This is a Spring application with persistence provided by Spring Data/Hibernate/JPA.  Although it's a simple application, it is a real world recommendation engine with data stored in 2 formats:
+A simple movie recommendation engine based on Apache Mahout.  This is a Spring application with persistence provided by Spring Data/Hibernate/JPA.  Although it's a simple application, it is a real recommendation engine with data stored in 2 formats:
 MySQL database and CSV file.  The idea is simple 
 
 Given:
@@ -30,8 +30,12 @@ public interface RecommendationEngine {
             throws TasteException;
 }
 ```
+<b>Data Model:</b>
 
-Hibernate Entities:
+![Settings Window](https://raw.githubusercontent.com/julesbond007/movie-recommendation-engine/master/docs/recommendation_tables.png)
+
+<b>Hibernate Entities:</b>
+<br/>
 Movie.java
 
 ```java
@@ -61,9 +65,9 @@ public class Movie {
     //getters and setters ommited
 }
 ```
-
+<br/>
 User.java
-
+<br/>
 ```java
 @Entity(name = "users")
 public class User {
@@ -87,7 +91,3 @@ public class User {
     //getters and setters ommited
 }
 ```
-
-<b>Data Model:</b>
-
-![Settings Window](https://raw.githubusercontent.com/julesbond007/movie-recommendation-engine/master/docs/recommendation_tables.png)
