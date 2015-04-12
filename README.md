@@ -4,10 +4,12 @@ A simple movie recommendation engine based on Apache Mahout.  This is a Spring a
 MySQL database and CSV file.
 
 The idea is simple given:
-    1. A list of users
-    2. A list of movies
-    3. Similarities between movie 1 and movie 2
-    4. User's preferene for each movie
+<ol>
+    <li> A list of users</li>
+    <li> A list of movies</li>
+    <li> Similarities between movie 1 and movie 2</li>
+    <li> User's preferene for each movie</li>
+</ol>
 
 We recommend a set of movies that the user would enjoy.
 <br/>
