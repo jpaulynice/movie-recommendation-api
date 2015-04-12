@@ -5,5 +5,38 @@ package com.jodisoft.recommendation.model.enums;
  *
  */
 public enum MovieGenre {
-    ACTION, ADVENTURE, COMEDY, HORROR, ROMANCE, SCIENCE_FICTION, THRILLER
+    /**
+     * action movie type
+     */
+    ACTION,
+
+    /**
+     * adventure movie type
+     */
+    ADVENTURE,
+
+    /**
+     * comedy movie type
+     */
+    COMEDY,
+
+    /**
+     * horror movie type
+     */
+    HORROR,
+
+    /**
+     * romance movie type
+     */
+    ROMANCE,
+
+    /**
+     * science fiction movie type
+     */
+    SCIENCE_FICTION,
+
+    /**
+     * thriller movie type
+     */
+    THRILLER
 }

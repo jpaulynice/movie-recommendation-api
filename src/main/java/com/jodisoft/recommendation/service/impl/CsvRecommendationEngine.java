@@ -30,23 +30,31 @@ public class CsvRecommendationEngine implements RecommendationService {
     private DataModel dataModel;
 
     /**
-     *
+     * create new csv recommendation engine
      */
     public CsvRecommendationEngine() {
-        init();
+
     }
 
-    private void init() {
+    /**
+     * @param csvFilePath the path to the data in csv format
+     *
+     */
+    public CsvRecommendationEngine(final String csvFilePath) {
+        init(csvFilePath);
+    }
+
+    private void init(final String csvFilePath) {
         try {
-            dataModel = new FileDataModel(new File(
-                    "/META-INF/data/csv/dataset.csv"));
+            dataModel = new FileDataModel(new File(csvFilePath));
         } catch (final IOException e) {
             logger.error("Exception initializing data model", e);
         }
     }
 
     @Override
-    public List<RecommendedItem> recommend() throws TasteException {
+    public List<RecommendedItem> recommend(final int userId,
+            final int recommendations) throws TasteException {
         final UserSimilarity similarity = new PearsonCorrelationSimilarity(
                 dataModel);
         final UserNeighborhood neighborhood = new ThresholdUserNeighborhood(
@@ -54,6 +62,6 @@ public class CsvRecommendationEngine implements RecommendationService {
         final UserBasedRecommender recommender = new GenericUserBasedRecommender(
                 dataModel, neighborhood, similarity);
 
-        return recommender.recommend(2, 3);
+        return recommender.recommend(userId, recommendations);
     }
 }
