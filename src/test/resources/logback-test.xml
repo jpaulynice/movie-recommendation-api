@@ -13,9 +13,13 @@
 		</encoder>
 	</appender>
          
-    <logger name="com.jodisoft" level="info,debug"/>
-    <logger name="org.springframework" level="info"/>
-    <root level="info">
-    	<appender-ref ref="STDOUT"/>
+    
+    <logger name="com.jodisoft" level="info" />
+    <logger name="org.apache.mahout" level="warn" />
+    <logger name="org.springframework" level="warn" />
+    <logger name="org.hibernate" level="warn" />
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
     </root>
 </configuration>

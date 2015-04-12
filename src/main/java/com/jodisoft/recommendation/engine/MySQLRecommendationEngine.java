@@ -49,7 +49,7 @@ public class MySQLRecommendationEngine implements RecommendationEngine {
     @Override
     public Set<Movie> recommend(final Integer userId, final int howMany)
             throws TasteException {
-        logger.info("initializing mysql preference model");
+        logger.debug("initializing mysql preference model");
         final DataModel model = new MySQLBooleanPrefJDBCDataModel(dataSource);
         final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(
                 dataSource);

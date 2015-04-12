@@ -1,10 +1,17 @@
 package com.jodisoft.recommendation.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 /**
  * @author Jay Paulynice
@@ -22,6 +29,26 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "taste_preferences", joinColumns = { @JoinColumn(
+            name = "user_id") }, inverseJoinColumns = { @JoinColumn(
+            name = "item_id") })
+    private Set<Movie> moviePreferences;
+
+    /**
+     * @return the moviePreferences
+     */
+    public Set<Movie> getMoviePreferences() {
+        return moviePreferences;
+    }
+
+    /**
+     * @param moviePreferences the moviePreferences to set
+     */
+    public void setMoviePreferences(final Set<Movie> moviePreferences) {
+        this.moviePreferences = moviePreferences;
+    }
 
     /**
      * @return the id
@@ -73,7 +100,7 @@ public class User {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

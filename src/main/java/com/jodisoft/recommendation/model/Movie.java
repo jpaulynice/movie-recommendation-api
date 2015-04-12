@@ -1,18 +1,26 @@
 package com.jodisoft.recommendation.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import com.jodisoft.recommendation.model.enums.MovieGenre;
 
 /**
  * Movie entity for hibernate database persistence. Movie details can be fetched
  * from the IMDB API with a rest call like this:
+ *
  * http://www.omdbapi.com/?t=planes
  *
  * @author Jay Paulynice
@@ -33,6 +41,12 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private MovieGenre genre;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "taste_item_similarity", joinColumns = { @JoinColumn(
+            name = "item_id_a") }, inverseJoinColumns = { @JoinColumn(
+            name = "item_id_b") })
+    private Set<Movie> similarMovies;
 
     /**
      * @return the id
@@ -90,9 +104,23 @@ public class Movie {
         this.imdb_id = imdb_id;
     }
 
+    /**
+     * @return the similarMovies
+     */
+    public Set<Movie> getSimilarMovies() {
+        return similarMovies;
+    }
+
+    /**
+     * @param similarMovies the similarMovies to set
+     */
+    public void setSimilarMovies(final Set<Movie> similarMovies) {
+        this.similarMovies = similarMovies;
+    }
+
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -105,7 +133,7 @@ public class Movie {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -127,7 +155,7 @@ public class Movie {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

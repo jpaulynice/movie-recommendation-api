@@ -13,7 +13,8 @@
 		location="classpath:META-INF/properties/db.properties"
 		system-properties-mode="FALLBACK" />
 	<context:component-scan base-package="com.jodisoft.recommendation" />
-
+    <tx:annotation-driven/>
+    
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${driverClassName}" />
@@ -34,14 +35,16 @@
 		<property name="packagesToScan" value="com.jodisoft.recommendation.model" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="database" value="MYSQL" />
-				<property name="generateDdl" value="false" />
-				<property name="showSql" value="true" />
-				<property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+				<property name="database" value="${database}" />
+				<property name="generateDdl" value="${generateDdl}" />
+				<property name="showSql" value="${show_sql}" />
+				<property name="databasePlatform" value="${databasePlatform}" />
 			</bean>
 		</property>
 	</bean>
 
 	<jpa:repositories base-package="com.jodisoft.recommendation.repository"
 		entity-manager-factory-ref="entityManagerFactory" />
+	
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 </beans>

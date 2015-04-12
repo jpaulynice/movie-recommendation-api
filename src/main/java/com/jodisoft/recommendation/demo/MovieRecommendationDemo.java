@@ -10,6 +10,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jodisoft.recommendation.engine.RecommendationEngine;
 import com.jodisoft.recommendation.model.Movie;
+import com.jodisoft.recommendation.model.User;
+import com.jodisoft.recommendation.service.UserService;
 
 /**
  * Demo for the movie recommendation engine based on MySQL data store
@@ -32,8 +34,23 @@ public class MovieRecommendationDemo {
         final RecommendationEngine service = (RecommendationEngine) context
                 .getBean("mySQLRecommendationEngine");
 
+        final UserService uService = (UserService) context
+                .getBean("userServiceImpl");
+        final User u = uService.find(2);
+
         // get 3 movie recommendations for user id 2
         final Set<Movie> movies = service.recommend(2, 3);
-        logger.info("movie recommendations: " + movies);
+        logger.info("recommended movies for " + u.getFirstName() + ": "
+                + movies);
+
+        // for each movie get similar movies
+        for (final Movie m : movies) {
+            logger.info("Similar movies to " + m.getName() + ": "
+                    + m.getSimilarMovies());
+        }
+
+        // get user's movie preferences
+        logger.info(u.getFirstName() + " preferences: "
+                + u.getMoviePreferences());
     }
 }
