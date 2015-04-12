@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
+import com.jodisoft.recommendation.engine.RecommendationEngine;
+
 /**
  * @author Jay Paulynice
  *
@@ -16,7 +18,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 public class RecommendationServiceTest extends AbstractJUnit4SpringContextTests {
     @Autowired
     @Qualifier("mySQLRecommendationEngine")
-    private RecommendationService service;
+    private RecommendationEngine service;
 
     /**
      * @throws TasteException if errors

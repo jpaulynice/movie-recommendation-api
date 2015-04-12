@@ -4,7 +4,8 @@ CREATE DATABASE recommendationdb;
   CREATE TABLE items (
      item_id INTEGER NOT NULL AUTO_INCREMENT, 
      name varchar (100) NOT NULL, 
-     type varchar (100) default NULL, 
+     type varchar (100) default NULL,
+     imdb_id varchar (100) default NULL,
      PRIMARY KEY (item_id) 
   ); 
 

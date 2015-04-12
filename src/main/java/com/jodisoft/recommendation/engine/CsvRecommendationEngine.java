@@ -1,9 +1,10 @@
-package com.jodisoft.recommendation.service.impl;
+package com.jodisoft.recommendation.engine;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
@@ -22,14 +23,14 @@ import org.springframework.stereotype.Service;
 
 import com.jodisoft.recommendation.model.Movie;
 import com.jodisoft.recommendation.service.MovieService;
-import com.jodisoft.recommendation.service.RecommendationService;
 
 /**
- * @author Jay Paulynice
+ * User similarity based recommendation engine with data stored in a csv file.
  *
+ * @author Jay Paulynice
  */
 @Service
-public class CsvRecommendationEngine implements RecommendationService {
+public class CsvRecommendationEngine implements RecommendationEngine {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private DataModel dataModel;
     final MovieService mService;
@@ -56,7 +57,7 @@ public class CsvRecommendationEngine implements RecommendationService {
     }
 
     @Override
-    public List<Movie> recommend(final Integer userId, final int howMany)
+    public Set<Movie> recommend(final Integer userId, final int howMany)
             throws TasteException {
         final UserSimilarity similarity = new PearsonCorrelationSimilarity(
                 dataModel);
@@ -64,13 +65,17 @@ public class CsvRecommendationEngine implements RecommendationService {
                 0.1, similarity, dataModel);
         final UserBasedRecommender recommender = new GenericUserBasedRecommender(
                 dataModel, neighborhood, similarity);
-
         final List<RecommendedItem> items = recommender.recommend(userId,
                 howMany);
 
         return getRecommendedMovies(items);
     }
 
+    /**
+     * Initialize the data model given the csv file path.
+     *
+     * @param csvFilePath the path for the csv file
+     */
     private void init(final String csvFilePath) {
         try {
             dataModel = new FileDataModel(new File(csvFilePath));
@@ -79,18 +84,30 @@ public class CsvRecommendationEngine implements RecommendationService {
         }
     }
 
-    private List<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
-        final List<Movie> recommendedMovies = new ArrayList<>();
-
+    /**
+     * For each recommended item, fetch the details from the database.
+     *
+     * @param items list of recommended items
+     * @return list of movie with details
+     */
+    private Set<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
+        final Set<Movie> recommendedMovies = new HashSet<>();
         for (final RecommendedItem item : items) {
-            final int itemId = Integer
-                    .valueOf(String.valueOf(item.getItemID()));
-            final Movie movie = mService.find(itemId);
-            if (movie != null) {
-                recommendedMovies.add(movie);
-            }
+            recommendedMovies.add(getMovie(item));
         }
 
         return recommendedMovies;
+    }
+
+    /**
+     * Fetch the details of the recommended item
+     *
+     * @param item the recommended item
+     * @return movie details
+     */
+    public Movie getMovie(final RecommendedItem item) {
+        final Integer itemId = Integer
+                .valueOf(String.valueOf(item.getItemID()));
+        return mService.find(itemId);
     }
 }

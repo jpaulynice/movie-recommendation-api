@@ -7,12 +7,12 @@ insert into users (name,email) values ('me','me.paulynice@gmail.com');
 
 
 --populate items
-insert into items (name,type) values('captain america','ACTION');
-insert into items (name,type) values('iron man','ACTION');
-insert into items (name,type) values('rambo','ACTION');
-insert into items (name,type) values('mcgyver','ACTION');
-insert into items (name,type) values('cars','FAMILY');
-insert into items (name,type) values('planes','FAMILY');
+insert into items (name,type,imdb_id) values('captain america','ACTION','tt0103923');
+insert into items (name,type,imdb_id) values('iron man','ACTION','tt0371746');
+insert into items (name,type,imdb_id) values('rambo','ACTION','tt0462499');
+insert into items (name,type,imdb_id) values('mcgyver','ACTION','tt0110419');
+insert into items (name,type,imdb_id) values('cars','FAMILY','tt0317219');
+insert into items (name,type,imdb_id) values('planes','FAMILY','tt1691917');
 
 
 --populate user preferences
