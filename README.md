@@ -9,12 +9,12 @@ A simple movie recommendation engine based on Apache Mahout.
 ```java
 package com.jodisoft.recommendation.engine;
 
-import java.util.List;
+import java.util.Set;
 import org.apache.mahout.cf.taste.common.TasteException;
 import com.jodisoft.recommendation.model.Movie;
 
 public interface RecommendationEngine {
-    public List<Movie> recommend(final Integer userId, final int howMany)
+    public Set<Movie> recommend(final Integer userId, final int howMany)
             throws TasteException;
 }
 ```
