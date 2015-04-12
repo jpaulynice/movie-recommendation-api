@@ -1,3 +1,3 @@
-Movie Recommendation Engine with Apache Mahout
+Recommendation Engine
 =====================================
 A simple movie recommendation engine based on Apache Mahout.
