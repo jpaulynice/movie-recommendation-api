@@ -1,4 +1,3 @@
-DROP DATABASE if exists recommendationdb;
 CREATE DATABASE recommendationdb; 
   USE recommendationdb; 
   
