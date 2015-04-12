@@ -38,8 +38,8 @@ public class MySQLRecommendationEngine implements RecommendationService {
     }
 
     @Override
-    public List<RecommendedItem> recommend(final int userId,
-            final int recommendations) throws TasteException {
+    public List<RecommendedItem> recommend(final int userId, final int howMany)
+            throws TasteException {
         logger.info("initializing mysql preference model");
         final DataModel model = new MySQLBooleanPrefJDBCDataModel(dataSource);
         final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(
@@ -50,7 +50,7 @@ public class MySQLRecommendationEngine implements RecommendationService {
                 model, similarity, candidateStrategy, candidateStrategy);
 
         final List<RecommendedItem> movies = recommender.recommend(userId,
-                recommendations);
+                howMany);
         return movies;
     }
 }

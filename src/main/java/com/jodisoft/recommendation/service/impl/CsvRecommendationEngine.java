@@ -53,8 +53,8 @@ public class CsvRecommendationEngine implements RecommendationService {
     }
 
     @Override
-    public List<RecommendedItem> recommend(final int userId,
-            final int recommendations) throws TasteException {
+    public List<RecommendedItem> recommend(final int userId, final int howMany)
+            throws TasteException {
         final UserSimilarity similarity = new PearsonCorrelationSimilarity(
                 dataModel);
         final UserNeighborhood neighborhood = new ThresholdUserNeighborhood(
@@ -62,6 +62,6 @@ public class CsvRecommendationEngine implements RecommendationService {
         final UserBasedRecommender recommender = new GenericUserBasedRecommender(
                 dataModel, neighborhood, similarity);
 
-        return recommender.recommend(userId, recommendations);
+        return recommender.recommend(userId, howMany);
     }
 }
