@@ -31,6 +31,62 @@ public interface RecommendationEngine {
 }
 ```
 
+Hibernate Entities:
+Movie.java
+
+```java
+@Entity(name = "items")
+public class Movie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "item_id")
+    private Integer id;
+
+    @Column(name = "imdb_id")
+    private String imdb_id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private MovieGenre genre;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "taste_item_similarity", joinColumns = { @JoinColumn(
+            name = "item_id_a") }, inverseJoinColumns = { @JoinColumn(
+            name = "item_id_b") })
+    private Set<Movie> similarMovies;
+    
+    //getters and setters ommited
+}
+```
+
+User.java
+
+```java
+@Entity(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+    private Integer id;
+
+    @Column(name = "name")
+    private String firstName;
+
+    @Column(name = "email")
+    private String email;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "taste_preferences", joinColumns = { @JoinColumn(
+            name = "user_id") }, inverseJoinColumns = { @JoinColumn(
+            name = "item_id") })
+    private Set<Movie> moviePreferences;
+    
+    //getters and setters ommited
+}
+```
 
 <b>Data Model:</b>
 
