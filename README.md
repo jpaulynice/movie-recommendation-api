@@ -8,7 +8,7 @@ The idea is simple given:
     <li> A list of users</li>
     <li> A list of movies</li>
     <li> Similarities between movie 1 and movie 2</li>
-    <li> User's preferene for each movie</li>
+    <li> Users preferences for each movie</li>
 </ol>
 
 We recommend a set of movies that the user would enjoy.
