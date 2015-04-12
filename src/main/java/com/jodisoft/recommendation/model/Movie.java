@@ -1,7 +1,12 @@
 package com.jodisoft.recommendation.model;
 
-import java.sql.Date;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import com.jodisoft.recommendation.model.enums.MovieGenre;
 
@@ -9,18 +14,32 @@ import com.jodisoft.recommendation.model.enums.MovieGenre;
  * @author Jay Paulynice
  *
  */
+@Entity(name = "items")
 public class Movie {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "item_id")
+    private Integer id;
+
+    @Column(name = "name")
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
     private MovieGenre genre;
-    private List<Actor> actors;
-    private Date releaseDate;
 
     /**
      * @return the id
      */
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(final Integer id) {
+        this.id = id;
     }
 
     /**
@@ -38,27 +57,6 @@ public class Movie {
     }
 
     /**
-     * @return the actors
-     */
-    public List<Actor> getActors() {
-        return actors;
-    }
-
-    /**
-     * @return the releaseDate
-     */
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(final int id) {
-        this.id = id;
-    }
-
-    /**
      * @param name the name to set
      */
     public void setName(final String name) {
@@ -72,17 +70,13 @@ public class Movie {
         this.genre = genre;
     }
 
-    /**
-     * @param actors the actors to set
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
      */
-    public void setActors(final List<Actor> actors) {
-        this.actors = actors;
-    }
-
-    /**
-     * @param releaseDate the releaseDate to set
-     */
-    public void setReleaseDate(final Date releaseDate) {
-        this.releaseDate = releaseDate;
+    @Override
+    public String toString() {
+        return "Movie [id=" + id + ", name=" + name + ", genre=" + genre + "]";
     }
 }

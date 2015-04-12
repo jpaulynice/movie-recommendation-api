@@ -3,12 +3,12 @@ package com.jodisoft.recommendation.demo;
 import java.util.List;
 
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.jodisoft.recommendation.model.Movie;
 import com.jodisoft.recommendation.service.RecommendationService;
 
 /**
@@ -30,8 +30,8 @@ public class MovieRecommendationDemo {
         final RecommendationService service = (RecommendationService) context
                 .getBean("mySQLRecommendationEngine");
 
-        // get 3 recommendations for user id 2
-        final List<RecommendedItem> movies = service.recommend(2, 3);
+        // get 3 movie recommendations for user id 2
+        final List<Movie> movies = service.recommend(2, 3);
         logger.info("movie recommendations: " + movies);
     }
 }

@@ -21,6 +21,11 @@ public enum MovieGenre {
     COMEDY,
 
     /**
+     * family movie type
+     */
+    FAMILY,
+
+    /**
      * horror movie type
      */
     HORROR,

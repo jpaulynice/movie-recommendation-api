@@ -2,7 +2,6 @@ DROP DATABASE if exists recommendationdb;
 CREATE DATABASE recommendationdb; 
   USE recommendationdb; 
   
-  --create items tables
   CREATE TABLE items (
      item_id INTEGER NOT NULL AUTO_INCREMENT, 
      name varchar (100) NOT NULL, 
@@ -10,7 +9,6 @@ CREATE DATABASE recommendationdb;
      PRIMARY KEY (item_id) 
   ); 
 
-  --create users table
   CREATE TABLE users ( 
 	 user_id INTEGER NOT NULL AUTO_INCREMENT,
      name varchar (50) NOT NULL, 
@@ -18,17 +16,15 @@ CREATE DATABASE recommendationdb;
      PRIMARY KEY (user_id) 
   ); 
 
-  --create taste_preferences table table
   CREATE TABLE taste_preferences (
 	 user_id INTEGER NOT NULL, 
      item_id INTEGER NOT NULL, 
      preference INTEGER NOT NULL, 
      timestamp timestamp not null default current_timestamp, 
      FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE, 
-     FOREIGN KEY (item_id) REFERENCES Items (item_id) ON DELETE CASCADE 
+     FOREIGN KEY (item_id) REFERENCES items (item_id) ON DELETE CASCADE 
   ); 
 
-  --create taste_item_similarity table
   CREATE TABLE taste_item_similarity (
 	 item_id_a INTEGER NOT NULL, 
      item_id_b INTEGER NOT NULL, 
