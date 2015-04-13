@@ -8,6 +8,8 @@ import com.jodisoft.recommendation.model.Movie;
  */
 public interface MovieService {
     /**
+     * Find a movie by id
+     *
      * @param id the movie id
      * @return the movie details for the id
      */

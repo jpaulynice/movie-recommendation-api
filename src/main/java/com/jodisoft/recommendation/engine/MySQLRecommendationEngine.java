@@ -11,7 +11,6 @@ import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLBooleanPrefJDBCDataModel;
 import org.apache.mahout.cf.taste.impl.recommender.AllSimilarItemsCandidateItemsStrategy;
 import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.jdbc.MySQLJDBCInMemoryItemSimilarity;
-import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.ItemBasedRecommender;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
@@ -34,6 +33,7 @@ public class MySQLRecommendationEngine implements RecommendationEngine {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final DataSource dataSource;
     final MovieService mService;
+    private ItemBasedRecommender recommender;
 
     /**
      * @param dataSource the dataSource to set
@@ -44,23 +44,27 @@ public class MySQLRecommendationEngine implements RecommendationEngine {
             final MovieService mService) {
         this.dataSource = dataSource;
         this.mService = mService;
+        initRecommender();
     }
 
     @Override
     public Set<Movie> recommend(final Integer userId, final int howMany)
             throws TasteException {
-        logger.debug("initializing mysql preference model");
-        final DataModel model = new MySQLBooleanPrefJDBCDataModel(dataSource);
+        return getRecommendedMovies(recommender.recommend(userId, howMany));
+    }
+
+    /**
+     * Initialize the recommender with a mysql datasource
+     */
+    private void initRecommender() {
+        logger.debug("initializing mysql item similarity and preference data model.");
         final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(
                 dataSource);
         final AllSimilarItemsCandidateItemsStrategy candidateStrategy = new AllSimilarItemsCandidateItemsStrategy(
                 similarity);
-        final ItemBasedRecommender recommender = new GenericItemBasedRecommender(
-                model, similarity, candidateStrategy, candidateStrategy);
-        final List<RecommendedItem> items = recommender.recommend(userId,
-                howMany);
-
-        return getRecommendedMovies(items);
+        recommender = new GenericItemBasedRecommender(
+                new MySQLBooleanPrefJDBCDataModel(dataSource), similarity,
+                candidateStrategy, candidateStrategy);
     }
 
     /**

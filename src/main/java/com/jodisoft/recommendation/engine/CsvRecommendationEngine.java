@@ -18,7 +18,6 @@ import org.apache.mahout.cf.taste.recommender.UserBasedRecommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jodisoft.recommendation.model.Movie;
@@ -32,39 +31,46 @@ import com.jodisoft.recommendation.service.MovieService;
 @Service
 public class CsvRecommendationEngine implements RecommendationEngine {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private DataModel dataModel;
-    final MovieService mService;
+    private MovieService mService;
+    private UserBasedRecommender recommender;
+    private static final Double DEFAULT_SIMILARITY_THRESHOLD = 0.1;
 
     /**
-     * create new csv recommendation engine
-     *
-     * @param mService movie service
+     * create new csv recommendation engine with no parameters
      */
-    @Autowired
-    public CsvRecommendationEngine(final MovieService mService) {
-        this.mService = mService;
+    public CsvRecommendationEngine() {
+        // nothing to see here
     }
 
     /**
+     * create new csv recommendation engine with default similarity threshold
+     *
      * @param csvFilePath the path to the data in csv format
      * @param mService movie service
-     *
      */
     public CsvRecommendationEngine(final String csvFilePath,
             final MovieService mService) {
-        init(csvFilePath);
         this.mService = mService;
+        initRecommender(csvFilePath, DEFAULT_SIMILARITY_THRESHOLD);
+    }
+
+    /**
+     * create new csv recommendation engine with given similarity threshold
+     *
+     * @param csvFilePath the path to the data in csv format
+     * @param mService movie service
+     * @param similarityThreshold the minimum similarity to consider this needs
+     *        to be between -1.0 to 1.0 where 1.0 represents perfect similarity.
+     */
+    public CsvRecommendationEngine(final String csvFilePath,
+            final MovieService mService, final Double similarityThreshold) {
+        this.mService = mService;
+        initRecommender(csvFilePath, similarityThreshold);
     }
 
     @Override
     public Set<Movie> recommend(final Integer userId, final int howMany)
             throws TasteException {
-        final UserSimilarity similarity = new PearsonCorrelationSimilarity(
-                dataModel);
-        final UserNeighborhood neighborhood = new ThresholdUserNeighborhood(
-                0.1, similarity, dataModel);
-        final UserBasedRecommender recommender = new GenericUserBasedRecommender(
-                dataModel, neighborhood, similarity);
         final List<RecommendedItem> items = recommender.recommend(userId,
                 howMany);
 
@@ -72,15 +78,23 @@ public class CsvRecommendationEngine implements RecommendationEngine {
     }
 
     /**
-     * Initialize the data model given the csv file path.
+     * Initialize the recommender
      *
-     * @param csvFilePath the path for the csv file
+     * @param csvFilePath the path to the csv file
+     * @param similarityThreashold
      */
-    private void init(final String csvFilePath) {
+    private void initRecommender(final String csvFilePath,
+            final Double similarityThreashold) {
         try {
-            dataModel = new FileDataModel(new File(csvFilePath));
-        } catch (final IOException e) {
-            logger.error("Exception initializing data model", e);
+            final DataModel dataModel = new FileDataModel(new File(csvFilePath));
+            final UserSimilarity similarity = new PearsonCorrelationSimilarity(
+                    dataModel);
+            final UserNeighborhood neighborhood = new ThresholdUserNeighborhood(
+                    similarityThreashold, similarity, dataModel);
+            recommender = new GenericUserBasedRecommender(dataModel,
+                    neighborhood, similarity);
+        } catch (final TasteException | IOException e) {
+            logger.error("Exception while initializing the recommender.", e);
         }
     }
 
@@ -105,7 +119,7 @@ public class CsvRecommendationEngine implements RecommendationEngine {
      * @param item the recommended item
      * @return movie details
      */
-    public Movie getMovie(final RecommendedItem item) {
+    private Movie getMovie(final RecommendedItem item) {
         final Integer itemId = Integer
                 .valueOf(String.valueOf(item.getItemID()));
         return mService.find(itemId);

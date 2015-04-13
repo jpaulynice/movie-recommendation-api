@@ -8,6 +8,8 @@ import com.jodisoft.recommendation.model.User;
  */
 public interface UserService {
     /**
+     * Find a user by id
+     *
      * @param id the user id
      * @return the user details for the id
      */
