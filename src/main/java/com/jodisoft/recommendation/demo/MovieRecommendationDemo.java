@@ -36,11 +36,13 @@ public class MovieRecommendationDemo {
 
         final UserService uService = (UserService) context
                 .getBean("userServiceImpl");
-        final User u = uService.find(2);
+        final Integer userId = 1;
+        final int howMany = 3;
+        final User user = uService.find(userId);
 
-        // get 3 movie recommendations for user id 2
-        final Set<Movie> movies = service.recommend(2, 3);
-        logger.info("recommended movies for " + u.getFirstName() + ": "
+        // get 3 movie recommendations for user id
+        final Set<Movie> movies = service.recommend(userId, howMany);
+        logger.info("recommended movies for " + user.getFirstName() + ": "
                 + movies);
 
         // for each movie get similar movies
@@ -50,7 +52,7 @@ public class MovieRecommendationDemo {
         }
 
         // get user's movie preferences
-        logger.info(u.getFirstName() + " preferences: "
-                + u.getMoviePreferences());
+        logger.info(user.getFirstName() + " preferences: "
+                + user.getMoviePreferences());
     }
 }

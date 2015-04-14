@@ -25,7 +25,7 @@ insert into taste_preferences (user_id,item_id,preference) values (1,2,0);
 insert into taste_preferences (user_id,item_id,preference) values (2,4,1);
 insert into taste_preferences (user_id,item_id,preference) values (3,2,1);
 insert into taste_preferences (user_id,item_id,preference) values (4,2,0);
-insert into taste_preferences (user_id,item_id,preference) values (5,5,1);
+insert into taste_preferences (user_id,item_id,preference) values (5,3,1);
 insert into taste_preferences (user_id,item_id,preference) values (1,3,1);
 insert into taste_preferences (user_id,item_id,preference) values (1,6,1);
 
