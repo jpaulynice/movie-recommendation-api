@@ -32,7 +32,7 @@ public interface RecommendationEngine {
 ```
 <b>Data Model:</b>
 
-![Settings Window](https://raw.githubusercontent.com/julesbond007/movie-recommendation-engine/master/docs/recommendation_tables.png)
+![Settings Window](https://raw.githubusercontent.com/julesbond007/movie-recommendation-engine/master/design/recommendation_tables.png)
 
 | Tables                   |Explanation                                                    |
 |:-------------------------|:-------------------------------------------------------------|
