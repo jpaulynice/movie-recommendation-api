@@ -42,8 +42,8 @@ public class MySQLRecommendationEngine implements RecommendationEngine {
     @Autowired
     public MySQLRecommendationEngine(final DataSource dataSource,
             final MovieService mService) {
-        this.dataSource = dataSource;
         this.mService = mService;
+        this.dataSource = dataSource;
         initRecommender();
     }
 
