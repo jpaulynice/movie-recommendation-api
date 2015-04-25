@@ -2,7 +2,7 @@ CREATE DATABASE recommendationdb;
   USE recommendationdb; 
   
   CREATE TABLE items (
-     item_id INTEGER NOT NULL AUTO_INCREMENT, 
+     item_id BIGINT NOT NULL AUTO_INCREMENT, 
      name varchar (100) NOT NULL, 
      type varchar (100) default NULL,
      imdb_id varchar (100) default NULL,
@@ -10,15 +10,15 @@ CREATE DATABASE recommendationdb;
   ); 
 
   CREATE TABLE users ( 
-	 user_id INTEGER NOT NULL AUTO_INCREMENT,
+	 user_id BIGINT NOT NULL AUTO_INCREMENT,
      name varchar (50) NOT NULL, 
      email varchar (100) default NULL, 
      PRIMARY KEY (user_id) 
   ); 
 
   CREATE TABLE taste_preferences (
-	 user_id INTEGER NOT NULL, 
-     item_id INTEGER NOT NULL, 
+	 user_id BIGINT NOT NULL, 
+     item_id BIGINT NOT NULL, 
      preference INTEGER NOT NULL, 
      timestamp timestamp not null default current_timestamp, 
      FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE, 
@@ -26,8 +26,8 @@ CREATE DATABASE recommendationdb;
   ); 
 
   CREATE TABLE taste_item_similarity (
-	 item_id_a INTEGER NOT NULL, 
-     item_id_b INTEGER NOT NULL, 
+	 item_id_a BIGINT NOT NULL, 
+     item_id_b BIGINT NOT NULL, 
      similarity DOUBLE NOT NULL, 
      FOREIGN KEY (item_id_a) REFERENCES items (item_id) ON DELETE CASCADE, 
      FOREIGN KEY (item_id_b) REFERENCES items (item_id) ON DELETE CASCADE 

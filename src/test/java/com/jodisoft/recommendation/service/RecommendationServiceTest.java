@@ -33,6 +33,6 @@ public class RecommendationServiceTest extends AbstractJUnit4SpringContextTests 
      */
     @Test
     public void testMySqlRecommendationService() throws TasteException {
-        Assert.assertNotNull(service.recommend(2, 3));
+        Assert.assertNotNull(service.recommend(2L, 3));
     }
 }

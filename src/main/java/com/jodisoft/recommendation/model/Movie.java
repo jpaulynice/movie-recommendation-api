@@ -30,7 +30,7 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "item_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "imdb_id")
     private String imdb_id;
@@ -51,14 +51,14 @@ public class Movie {
     /**
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(final Integer id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 

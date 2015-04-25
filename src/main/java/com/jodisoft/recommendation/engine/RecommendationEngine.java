@@ -16,10 +16,10 @@ public interface RecommendationEngine {
      * Recommend a number of movies for a user.
      *
      * @param userId the user to recommend items for
-     * @param howMany the number of recommendations to make
+     * @param n the number of recommendations to make
      * @return set of recommended movies
      * @throws TasteException if errors
      */
-    public Set<Movie> recommend(final Integer userId, final int howMany)
+    public Set<Movie> recommend(final Long userId, final int n)
             throws TasteException;
 }

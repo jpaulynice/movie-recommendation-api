@@ -69,7 +69,7 @@ public class CsvRecommendationEngine implements RecommendationEngine {
     }
 
     @Override
-    public Set<Movie> recommend(final Integer userId, final int howMany)
+    public Set<Movie> recommend(final Long userId, final int howMany)
             throws TasteException {
         final List<RecommendedItem> items = recommender.recommend(userId,
                 howMany);
@@ -107,7 +107,7 @@ public class CsvRecommendationEngine implements RecommendationEngine {
     private Set<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
         final Set<Movie> recommendedMovies = new HashSet<>();
         for (final RecommendedItem item : items) {
-            recommendedMovies.add(getMovie(item));
+            recommendedMovies.add(getMovie(item.getItemID()));
         }
 
         return recommendedMovies;
@@ -119,9 +119,7 @@ public class CsvRecommendationEngine implements RecommendationEngine {
      * @param item the recommended item
      * @return movie details
      */
-    private Movie getMovie(final RecommendedItem item) {
-        final Integer itemId = Integer
-                .valueOf(String.valueOf(item.getItemID()));
+    private Movie getMovie(final Long itemId) {
         return mService.find(itemId);
     }
 }

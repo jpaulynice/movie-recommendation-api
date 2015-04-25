@@ -22,7 +22,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "name")
     private String firstName;
@@ -33,7 +33,7 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "taste_preferences", joinColumns = { @JoinColumn(
             name = "user_id") }, inverseJoinColumns = { @JoinColumn(
-            name = "item_id") })
+                    name = "item_id") })
     private Set<Movie> moviePreferences;
 
     /**
@@ -53,14 +53,14 @@ public class User {
     /**
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(final Integer id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -100,7 +100,7 @@ public class User {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override

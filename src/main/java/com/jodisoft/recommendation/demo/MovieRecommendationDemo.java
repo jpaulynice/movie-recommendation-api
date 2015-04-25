@@ -36,7 +36,7 @@ public class MovieRecommendationDemo {
 
         final UserService uService = (UserService) context
                 .getBean("userServiceImpl");
-        final Integer userId = 1;
+        final Long userId = 1L;
         final int howMany = 3;
         final User user = uService.find(userId);
 

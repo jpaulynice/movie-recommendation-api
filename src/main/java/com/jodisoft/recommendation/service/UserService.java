@@ -13,5 +13,5 @@ public interface UserService {
      * @param id the user id
      * @return the user details for the id
      */
-    public User find(Integer id);
+    public User find(Long id);
 }

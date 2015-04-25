@@ -8,6 +8,6 @@ import com.jodisoft.recommendation.model.User;
  * @author Jay Paulynice
  *
  */
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
     // nothing to see here
 }

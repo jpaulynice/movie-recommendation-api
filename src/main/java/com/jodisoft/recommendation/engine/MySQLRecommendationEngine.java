@@ -11,6 +11,7 @@ import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLBooleanPrefJDBCDataModel;
 import org.apache.mahout.cf.taste.impl.recommender.AllSimilarItemsCandidateItemsStrategy;
 import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.jdbc.MySQLJDBCInMemoryItemSimilarity;
+import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.ItemBasedRecommender;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
@@ -32,25 +33,27 @@ import com.jodisoft.recommendation.service.MovieService;
 public class MySQLRecommendationEngine implements RecommendationEngine {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final DataSource dataSource;
-    final MovieService mService;
+    final MovieService movieService;
     private ItemBasedRecommender recommender;
 
     /**
      * @param dataSource the dataSource to set
-     * @param mService movie service
+     * @param movieService the movie service
      */
     @Autowired
     public MySQLRecommendationEngine(final DataSource dataSource,
-            final MovieService mService) {
-        this.mService = mService;
+            final MovieService movieService) {
+        this.movieService = movieService;
         this.dataSource = dataSource;
         initRecommender();
     }
 
     @Override
-    public Set<Movie> recommend(final Integer userId, final int howMany)
+    public Set<Movie> recommend(final Long userId, final int howMany)
             throws TasteException {
-        return getRecommendedMovies(recommender.recommend(userId, howMany));
+        final List<RecommendedItem> movies = recommender.recommend(userId,
+                howMany);
+        return getRecommendedMovies(movies);
     }
 
     /**
@@ -62,8 +65,9 @@ public class MySQLRecommendationEngine implements RecommendationEngine {
                 dataSource);
         final AllSimilarItemsCandidateItemsStrategy candidateStrategy = new AllSimilarItemsCandidateItemsStrategy(
                 similarity);
-        recommender = new GenericItemBasedRecommender(
-                new MySQLBooleanPrefJDBCDataModel(dataSource), similarity,
+        final DataModel dataModel = new MySQLBooleanPrefJDBCDataModel(
+                dataSource);
+        recommender = new GenericItemBasedRecommender(dataModel, similarity,
                 candidateStrategy, candidateStrategy);
     }
 
@@ -76,21 +80,10 @@ public class MySQLRecommendationEngine implements RecommendationEngine {
     private Set<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
         final Set<Movie> recommendedMovies = new HashSet<>();
         for (final RecommendedItem item : items) {
-            recommendedMovies.add(getMovie(item));
+            final Movie movie = movieService.find(item.getItemID());
+            recommendedMovies.add(movie);
         }
 
         return recommendedMovies;
-    }
-
-    /**
-     * Fetch the details of the recommended item
-     *
-     * @param item the recommended item
-     * @return movie details
-     */
-    public Movie getMovie(final RecommendedItem item) {
-        final Integer itemId = Integer
-                .valueOf(String.valueOf(item.getItemID()));
-        return mService.find(itemId);
     }
 }

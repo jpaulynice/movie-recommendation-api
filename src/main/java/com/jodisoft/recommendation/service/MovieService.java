@@ -13,5 +13,5 @@ public interface MovieService {
      * @param id the movie id
      * @return the movie details for the id
      */
-    public Movie find(final Integer id);
+    public Movie find(final Long id);
 }
