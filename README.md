@@ -32,14 +32,14 @@ public interface RecommendationEngine {
 ```
 <b>Data Model:</b>
 
-![Settings Window](https://raw.githubusercontent.com/julesbond007/movie-recommendation-engine/master/docs/recommendation_tables.png)
-
-| Tables                   |Explanation                                                    |
-|:-------------------------|:-------------------------------------------------------------|
-| users                    |  Store user info like name, email etc.                        |
-| items                    |  Store movie info like name, genre, unique identifier etc.    |
-| taste_preferences        |  Mapping table between users and movies preference            |
-| taste_item_similarity    |  Mapping table for self referencing movie similarities        |
+![Settings Window](https://raw.githubusercontent.com/julesbond007/movie-recommendation-engine/master/design/recommendation_tables.png)
+--------------------------------------------------------------------------------------
+|Tables                   |Explanation                                               | 
+--------------------------|-----------------------------------------------------------
+ users                    |  Store user info like name, email etc.                        
+ items                    |  Store movie info like name, genre, unique identifier etc.    
+ taste_preferences        |  Mapping table between users and movies preference            
+ taste_item_similarity    |  Mapping table for self referencing movie similarities        
 
 
 <b>Hibernate Entities:</b>
