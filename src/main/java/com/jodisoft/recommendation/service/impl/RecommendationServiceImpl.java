@@ -25,7 +25,8 @@ import org.springframework.stereotype.Service;
 import com.jodisoft.recommendation.entities.Movie;
 import com.jodisoft.recommendation.repository.MovieRepository;
 import com.jodisoft.recommendation.service.RecommendationService;
-import com.jodisoft.recommendation.service.model.RecommendationResponse;
+import com.jodisoft.recommendation.service.model.MovieRecommendation;
+import com.jodisoft.recommendation.service.model.mapper.MovieMapper;
 
 /**
  * Items similarity based recommendation engine with data stored in a MySQL
@@ -63,8 +64,9 @@ public class RecommendationServiceImpl implements RecommendationService {
             logger.info("Exception occurred.", e);
         }
         final Set<Movie> movies = getRecommendedMovies(items);
-        final RecommendationResponse res = new RecommendationResponse(movies);
-        final GenericEntity<RecommendationResponse> entity = new GenericEntity<RecommendationResponse>(
+        final MovieRecommendation res = new MovieRecommendation(
+                MovieMapper.toModelSet(movies));
+        final GenericEntity<MovieRecommendation> entity = new GenericEntity<MovieRecommendation>(
                 res) {
         };
         return Response.ok(entity).build();
