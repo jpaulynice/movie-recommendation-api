@@ -1,10 +1,12 @@
-package com.jodisoft.recommendation.engine;
+package com.jodisoft.recommendation.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.sql.DataSource;
+import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.Response;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLBooleanPrefJDBCDataModel;
@@ -20,8 +22,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jodisoft.recommendation.model.Movie;
-import com.jodisoft.recommendation.service.MovieService;
+import com.jodisoft.recommendation.entities.Movie;
+import com.jodisoft.recommendation.repository.MovieRepository;
+import com.jodisoft.recommendation.service.RecommendationService;
+import com.jodisoft.recommendation.service.model.RecommendationResponse;
 
 /**
  * Items similarity based recommendation engine with data stored in a MySQL
@@ -30,30 +34,40 @@ import com.jodisoft.recommendation.service.MovieService;
  * @author Jay Paulynice
  */
 @Service
-public class MySQLRecommendationEngine implements RecommendationEngine {
+public class RecommendationServiceImpl implements RecommendationService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final DataSource dataSource;
-    final MovieService movieService;
+    final MovieRepository movieRepository;
     private ItemBasedRecommender recommender;
 
     /**
+     * Default constructor with dataSource and movieService
+     *
      * @param dataSource the dataSource to set
-     * @param movieService the movie service
+     * @param movieRepository the movie repository
      */
     @Autowired
-    public MySQLRecommendationEngine(final DataSource dataSource,
-            final MovieService movieService) {
-        this.movieService = movieService;
+    public RecommendationServiceImpl(final DataSource dataSource,
+            final MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
         this.dataSource = dataSource;
         initRecommender();
     }
 
     @Override
-    public Set<Movie> recommend(final Long userId, final int howMany)
-            throws TasteException {
-        final List<RecommendedItem> movies = recommender.recommend(userId,
-                howMany);
-        return getRecommendedMovies(movies);
+    public Response recommend(final Long userId, final int howMany) {
+        List<RecommendedItem> items = null;
+        try {
+            items = recommender.recommend(userId, howMany);
+        } catch (final TasteException e) {
+            logger.info("Exception occurred.", e);
+        }
+        final Set<Movie> movies = getRecommendedMovies(items);
+        final RecommendationResponse res = new RecommendationResponse(movies);
+        final GenericEntity<RecommendationResponse> entity = new GenericEntity<RecommendationResponse>(
+                res) {
+        };
+        return Response.ok(entity).build();
     }
 
     /**
@@ -80,7 +94,7 @@ public class MySQLRecommendationEngine implements RecommendationEngine {
     private Set<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
         final Set<Movie> recommendedMovies = new HashSet<>();
         for (final RecommendedItem item : items) {
-            final Movie movie = movieService.find(item.getItemID());
+            final Movie movie = movieRepository.findOne(item.getItemID());
             recommendedMovies.add(movie);
         }
 

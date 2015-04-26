@@ -1,17 +1,28 @@
 package com.jodisoft.recommendation.service;
 
-import com.jodisoft.recommendation.model.Movie;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * @author Jay Paulynice
  *
  */
+@Path("movies")
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON })
 public interface MovieService {
     /**
      * Find a movie by id
      *
-     * @param id the movie id
+     * @param movieId the movie id
      * @return the movie details for the id
      */
-    public Movie find(final Long id);
+    @GET
+    @Path("{movieId}")
+    public Response find(@PathParam("movieId") Long movieId);
 }

@@ -1,4 +1,4 @@
-package com.jodisoft.recommendation.model;
+package com.jodisoft.recommendation.entities;
 
 import java.util.Set;
 
@@ -14,8 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
-import com.jodisoft.recommendation.model.enums.MovieGenre;
 
 /**
  * Movie entity for hibernate database persistence. Movie details can be fetched

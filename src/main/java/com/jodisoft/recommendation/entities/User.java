@@ -1,4 +1,4 @@
-package com.jodisoft.recommendation.model;
+package com.jodisoft.recommendation.entities;
 
 import java.util.Set;
 

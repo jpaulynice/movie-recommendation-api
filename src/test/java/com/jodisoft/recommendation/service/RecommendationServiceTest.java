@@ -4,21 +4,17 @@ import org.apache.mahout.cf.taste.common.TasteException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
-
-import com.jodisoft.recommendation.engine.RecommendationEngine;
 
 /**
  * @author Jay Paulynice
  *
  */
-@ContextConfiguration(locations = "/META-INF/spring/spring.xml")
+@ContextConfiguration(locations = "/applicationContext-test.xml")
 public class RecommendationServiceTest extends AbstractJUnit4SpringContextTests {
     @Autowired
-    @Qualifier("mySQLRecommendationEngine")
-    private RecommendationEngine service;
+    private RecommendationService service;
 
     /**
      * @throws TasteException if errors

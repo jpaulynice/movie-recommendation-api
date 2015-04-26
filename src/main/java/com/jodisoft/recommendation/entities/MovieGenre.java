@@ -1,4 +1,4 @@
-package com.jodisoft.recommendation.model.enums;
+package com.jodisoft.recommendation.entities;
 
 /**
  * @author Jay Paulynice
