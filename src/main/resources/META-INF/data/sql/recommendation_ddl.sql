@@ -10,14 +10,14 @@ CREATE DATABASE recommendationdb;
   ); 
 
   CREATE TABLE users ( 
-	 user_id BIGINT NOT NULL AUTO_INCREMENT,
+     user_id BIGINT NOT NULL AUTO_INCREMENT,
      name varchar (50) NOT NULL, 
      email varchar (100) default NULL, 
      PRIMARY KEY (user_id) 
   ); 
 
   CREATE TABLE taste_preferences (
-	 user_id BIGINT NOT NULL, 
+     user_id BIGINT NOT NULL, 
      item_id BIGINT NOT NULL, 
      preference INTEGER NOT NULL, 
      timestamp timestamp not null default current_timestamp, 
@@ -26,7 +26,7 @@ CREATE DATABASE recommendationdb;
   ); 
 
   CREATE TABLE taste_item_similarity (
-	 item_id_a BIGINT NOT NULL, 
+     item_id_a BIGINT NOT NULL, 
      item_id_b BIGINT NOT NULL, 
      similarity DOUBLE NOT NULL, 
      FOREIGN KEY (item_id_a) REFERENCES items (item_id) ON DELETE CASCADE, 
