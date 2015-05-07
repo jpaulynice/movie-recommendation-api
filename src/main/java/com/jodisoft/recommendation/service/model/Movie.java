@@ -1,18 +1,21 @@
 package com.jodisoft.recommendation.service.model;
 
-import java.util.Set;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.jodisoft.recommendation.entities.MovieGenre;
 
+/**
+ * DTO Movie object
+ *
+ * @author Jay Paulynice
+ *
+ */
 @XmlRootElement
 public class Movie {
     private Long id;
     private String imdb_id;
     private String name;
     private MovieGenre genre;
-    private Set<Movie> similarMovies;
 
     /**
      * @return the id
@@ -43,13 +46,6 @@ public class Movie {
     }
 
     /**
-     * @return the similarMovies
-     */
-    public Set<Movie> getSimilarMovies() {
-        return similarMovies;
-    }
-
-    /**
      * @param id the id to set
      */
     public void setId(final Long id) {
@@ -75,12 +71,5 @@ public class Movie {
      */
     public void setGenre(final MovieGenre genre) {
         this.genre = genre;
-    }
-
-    /**
-     * @param similarMovies the similarMovies to set
-     */
-    public void setSimilarMovies(final Set<Movie> similarMovies) {
-        this.similarMovies = similarMovies;
     }
 }

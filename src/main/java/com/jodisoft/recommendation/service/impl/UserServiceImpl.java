@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jodisoft.recommendation.repository.UserRepository;
 import com.jodisoft.recommendation.service.UserService;
+import com.jodisoft.recommendation.service.model.mapper.UserMapper;
 
 /**
  * @author Jay Paulynice
@@ -19,11 +20,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private UserMapper mapper;
+
+    /**
+     * default constructor
+     */
     public UserServiceImpl() {
+        // nothing to see here
     }
 
     @Override
     public Response find(final Long id) {
-        return Response.ok(repository.findOne(id)).build();
+        return Response.ok(mapper.toUserDto(repository.findOne(id))).build();
     }
 }

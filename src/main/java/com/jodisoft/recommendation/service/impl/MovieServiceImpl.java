@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jodisoft.recommendation.repository.MovieRepository;
 import com.jodisoft.recommendation.service.MovieService;
+import com.jodisoft.recommendation.service.model.mapper.MovieMapper;
 
 /**
  * @author Jay Paulynice
@@ -19,11 +20,19 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieRepository repository;
 
+    @Autowired
+    private MovieMapper mapper;
+
+    /**
+     * default constructor
+     */
     public MovieServiceImpl() {
+        // nothing to see here
     }
 
     @Override
     public Response find(final Long id) {
-        return Response.ok(repository.findOne(id)).build();
+        return Response.ok(mapper.toModel(repository.findOne(id))).build();
+
     }
 }

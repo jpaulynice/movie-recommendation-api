@@ -38,20 +38,23 @@ import com.jodisoft.recommendation.service.model.mapper.MovieMapper;
 public class RecommendationServiceImpl implements RecommendationService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final DataSource dataSource;
-    final MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
     private ItemBasedRecommender recommender;
+    private final MovieMapper mapper;
 
     /**
      * Default constructor with dataSource and movieService
      *
      * @param dataSource the dataSource to set
      * @param movieRepository the movie repository
+     * @param mapper mapper for movie entity to dto etc.
      */
     @Autowired
     public RecommendationServiceImpl(final DataSource dataSource,
-            final MovieRepository movieRepository) {
+            final MovieRepository movieRepository, final MovieMapper mapper) {
         this.movieRepository = movieRepository;
         this.dataSource = dataSource;
+        this.mapper = mapper;
         initRecommender();
     }
 
@@ -65,7 +68,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         }
         final Set<Movie> movies = getRecommendedMovies(items);
         final MovieRecommendation res = new MovieRecommendation(
-                MovieMapper.toModelSet(movies));
+                mapper.toModelSet(movies));
         final GenericEntity<MovieRecommendation> entity = new GenericEntity<MovieRecommendation>(
                 res) {
         };
