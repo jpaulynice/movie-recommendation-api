@@ -2,12 +2,14 @@ package com.jodisoft.recommendation.service.impl;
 
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.httpclient.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jodisoft.recommendation.repository.MovieRepository;
 import com.jodisoft.recommendation.service.MovieService;
+import com.jodisoft.recommendation.service.model.Movie;
 import com.jodisoft.recommendation.service.model.mapper.MovieMapper;
 
 /**
@@ -32,7 +34,11 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Response find(final Long id) {
-        return Response.ok(mapper.toModel(repository.findOne(id))).build();
-
+        final Movie movie = mapper.toModel(repository.findOne(id));
+        if (movie == null) {
+            return Response.status(HttpStatus.SC_NOT_FOUND)
+                    .entity("No movie found with given id: " + id).build();
+        }
+        return Response.ok(movie).build();
     }
 }

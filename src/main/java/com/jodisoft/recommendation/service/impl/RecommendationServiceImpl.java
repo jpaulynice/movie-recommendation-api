@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.sql.DataSource;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 
 import org.apache.mahout.cf.taste.common.TasteException;
@@ -69,10 +68,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         final Set<Movie> movies = getRecommendedMovies(items);
         final MovieRecommendation res = new MovieRecommendation(
                 mapper.toModelSet(movies));
-        final GenericEntity<MovieRecommendation> entity = new GenericEntity<MovieRecommendation>(
-                res) {
-        };
-        return Response.ok(entity).build();
+        return Response.ok(res).build();
     }
 
     /**
