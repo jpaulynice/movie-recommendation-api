@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
+ * User entity object
+ *
  * @author Jay Paulynice
  *
  */
@@ -35,7 +37,7 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "taste_preferences", joinColumns = { @JoinColumn(
             name = "user_id") }, inverseJoinColumns = { @JoinColumn(
-            name = "item_id") })
+                    name = "item_id") })
     private Set<Movie> moviePreferences;
 
     /**
@@ -102,7 +104,7 @@ public class User {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override

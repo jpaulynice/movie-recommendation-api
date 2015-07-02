@@ -1,13 +1,14 @@
 package com.jodisoft.recommendation.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import com.jodisoft.recommendation.model.User;
 
 /**
- * @author Jay Paulynice
+ * User repository
  *
+ * @author Jay Paulynice
  */
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
     // nothing to see here
 }

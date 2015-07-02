@@ -18,14 +18,16 @@ import com.jodisoft.recommendation.service.UserService;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
 
     /**
      * default constructor
+     * 
+     * @param repository the repository
      */
-    public UserServiceImpl() {
-        // nothing to see here
+    @Autowired
+    public UserServiceImpl(final UserRepository repository) {
+        this.repository = repository;
     }
 
     @Override

@@ -1,13 +1,14 @@
 package com.jodisoft.recommendation.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import com.jodisoft.recommendation.model.Movie;
 
 /**
- * @author Jay Paulynice
+ * Movie repository
  *
+ * @author Jay Paulynice
  */
-public interface MovieRepository extends JpaRepository<Movie, Long> {
+public interface MovieRepository extends CrudRepository<Movie, Long> {
     // nothing to see here
 }

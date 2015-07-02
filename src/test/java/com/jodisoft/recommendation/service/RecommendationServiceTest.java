@@ -8,10 +8,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 /**
+ * Test service class
+ *
  * @author Jay Paulynice
  *
  */
-@ContextConfiguration(locations = "/applicationContext-test.xml")
+@ContextConfiguration(locations = "/applicationContext.xml")
 public class RecommendationServiceTest extends AbstractJUnit4SpringContextTests {
     @Autowired
     private RecommendationService service;
@@ -20,15 +22,15 @@ public class RecommendationServiceTest extends AbstractJUnit4SpringContextTests 
      * @throws TasteException if errors
      */
     @Test
-    public void testNotNull() throws TasteException {
-        Assert.assertNotNull(service);
+    public void testMySqlRecommendationService() throws TasteException {
+        Assert.assertNotNull(this.service.recommend(2L, 3));
     }
 
     /**
      * @throws TasteException if errors
      */
     @Test
-    public void testMySqlRecommendationService() throws TasteException {
-        Assert.assertNotNull(service.recommend(2L, 3));
+    public void testNotNull() throws TasteException {
+        Assert.assertNotNull(this.service);
     }
 }

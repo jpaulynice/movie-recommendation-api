@@ -5,7 +5,6 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.httpclient.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.jodisoft.recommendation.model.Movie;
 import com.jodisoft.recommendation.repository.MovieRepository;
@@ -16,16 +15,17 @@ import com.jodisoft.recommendation.service.MovieService;
  *
  */
 @Service
-@Transactional
 public class MovieServiceImpl implements MovieService {
-    @Autowired
-    private MovieRepository repository;
+    private final MovieRepository repository;
 
     /**
      * default constructor
+     *
+     * @param repository the repository
      */
-    public MovieServiceImpl() {
-        // nothing to see here
+    @Autowired
+    public MovieServiceImpl(final MovieRepository repository) {
+        this.repository = repository;
     }
 
     @Override

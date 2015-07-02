@@ -34,8 +34,9 @@ import com.jodisoft.recommendation.service.RecommendationService;
  */
 @Service
 public class RecommendationServiceImpl implements RecommendationService {
+    private static final Logger logger = LoggerFactory
+            .getLogger(RecommendationServiceImpl.class);
     private final DataSource dataSource;
-    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final MovieRepository movieRepository;
     private ItemBasedRecommender recommender;
 
@@ -73,8 +74,7 @@ public class RecommendationServiceImpl implements RecommendationService {
      * Initialize the recommender with a mysql datasource
      */
     private void initRecommender() {
-        this.logger
-                .debug("initializing mysql item similarity and preference data model.");
+        logger.debug("initializing mysql item similarity and preference data model.");
         final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(
                 this.dataSource);
         final AllSimilarItemsCandidateItemsStrategy candidateStrategy = new AllSimilarItemsCandidateItemsStrategy(
@@ -91,7 +91,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         try {
             items = this.recommender.recommend(userId, howMany);
         } catch (final TasteException e) {
-            this.logger.info("Exception occurred.", e);
+            logger.info("Exception occurred.", e);
         }
         final Set<Movie> movies = getRecommendedMovies(items);
         final GenericEntity<Set<Movie>> entities = new GenericEntity<Set<Movie>>(

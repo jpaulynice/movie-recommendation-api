@@ -1,8 +1,9 @@
 package com.jodisoft.recommendation.model;
 
 /**
- * @author Jay Paulynice
+ * Movie genre enums
  *
+ * @author Jay Paulynice
  */
 public enum MovieGenre {
     /**
