@@ -1,5 +1,6 @@
 package com.jodisoft.recommendation.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,22 +54,22 @@ public class RecommendationServiceImpl implements RecommendationService {
         this.dataSource = dataSource;
         initRecommender();
     }
-
-    /**
-     * For each recommended item, fetch the details from the database.
-     *
-     * @param items list of recommended items
-     * @return list of movie with details
-     */
-    private Set<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
-        final Set<Movie> recommendedMovies = new HashSet<>();
-        for (final RecommendedItem item : items) {
-            final Movie movie = this.movieRepository.findOne(item.getItemID());
-            recommendedMovies.add(movie);
+    
+    @Override
+    public Response recommend(final Long userId, final int howMany) {
+        List<RecommendedItem> items = new ArrayList<>();
+        try {
+            items = this.recommender.recommend(userId, howMany);
+        } catch (final TasteException e) {
+            logger.info("Exception occurred.", e);
         }
-
-        return recommendedMovies;
+        final Set<Movie> movies = getRecommendedMovies(items);
+        final GenericEntity<Set<Movie>> entities = new GenericEntity<Set<Movie>>(
+                movies) {
+        };
+        return Response.ok(entities).build();
     }
+    
 
     /**
      * Initialize the recommender with a mysql datasource
@@ -85,18 +86,19 @@ public class RecommendationServiceImpl implements RecommendationService {
                 similarity, candidateStrategy, candidateStrategy);
     }
 
-    @Override
-    public Response recommend(final Long userId, final int howMany) {
-        List<RecommendedItem> items = null;
-        try {
-            items = this.recommender.recommend(userId, howMany);
-        } catch (final TasteException e) {
-            logger.info("Exception occurred.", e);
+    /**
+     * For each recommended item, fetch the details from the database.
+     *
+     * @param items list of recommended items
+     * @return list of movie with details
+     */
+    private Set<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
+        final Set<Movie> recommendedMovies = new HashSet<>();
+        for (final RecommendedItem item : items) {
+            final Movie movie = this.movieRepository.findOne(item.getItemID());
+            recommendedMovies.add(movie);
         }
-        final Set<Movie> movies = getRecommendedMovies(items);
-        final GenericEntity<Set<Movie>> entities = new GenericEntity<Set<Movie>>(
-                movies) {
-        };
-        return Response.ok(entities).build();
+
+        return recommendedMovies;
     }
 }
