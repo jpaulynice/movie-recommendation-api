@@ -73,8 +73,7 @@
         </cxf:features>
     </cxf:bus>
     
-    <bean id="jsonProvider" class="org.codehaus.jackson.map.ObjectMapper">
-    </bean>
+    <bean id="jsonProvider" class="org.codehaus.jackson.map.ObjectMapper"/>
     
     <!--JAX-RS server -->
     <jaxrs:server id="server" address="/">

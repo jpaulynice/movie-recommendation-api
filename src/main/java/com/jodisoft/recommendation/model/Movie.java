@@ -1,4 +1,4 @@
-package com.jodisoft.recommendation.entities;
+package com.jodisoft.recommendation.model;
 
 import java.util.Set;
 
@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Movie entity for hibernate database persistence. Movie details can be fetched
@@ -23,8 +24,13 @@ import javax.persistence.ManyToMany;
  *
  * @author Jay Paulynice
  */
+@XmlRootElement
 @Entity(name = "items")
 public class Movie {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private MovieGenre genre;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "item_id")
@@ -36,102 +42,15 @@ public class Movie {
     @Column(name = "name")
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type")
-    private MovieGenre genre;
-
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "taste_item_similarity", joinColumns = { @JoinColumn(
             name = "item_id_a") }, inverseJoinColumns = { @JoinColumn(
-            name = "item_id_b") })
+                    name = "item_id_b") })
     private Set<Movie> similarMovies;
 
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(final Long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @return the genre
-     */
-    public MovieGenre getGenre() {
-        return genre;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    /**
-     * @param genre the genre to set
-     */
-    public void setGenre(final MovieGenre genre) {
-        this.genre = genre;
-    }
-
-    /**
-     * @return the imdb_id
-     */
-    public String getImdb_id() {
-        return imdb_id;
-    }
-
-    /**
-     * @param imdb_id the imdb_id to set
-     */
-    public void setImdb_id(final String imdb_id) {
-        this.imdb_id = imdb_id;
-    }
-
-    /**
-     * @return the similarMovies
-     */
-    public Set<Movie> getSimilarMovies() {
-        return similarMovies;
-    }
-
-    /**
-     * @param similarMovies the similarMovies to set
-     */
-    public void setSimilarMovies(final Set<Movie> similarMovies) {
-        this.similarMovies = similarMovies;
-    }
-
     /*
      * (non-Javadoc)
-     * 
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((imdb_id == null) ? 0 : imdb_id.hashCode());
-        return result;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -143,22 +62,106 @@ public class Movie {
         if (getClass() != obj.getClass())
             return false;
         final Movie other = (Movie) obj;
-        if (imdb_id == null) {
+        if (this.imdb_id == null) {
             if (other.imdb_id != null)
                 return false;
-        } else if (!imdb_id.equals(other.imdb_id))
+        } else if (!this.imdb_id.equals(other.imdb_id))
             return false;
         return true;
     }
 
+    /**
+     * @return the genre
+     */
+    public MovieGenre getGenre() {
+        return this.genre;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return this.id;
+    }
+
+    /**
+     * @return the imdb_id
+     */
+    public String getImdb_id() {
+        return this.imdb_id;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * @return the similarMovies
+     */
+    public Set<Movie> getSimilarMovies() {
+        return this.similarMovies;
+    }
+
     /*
      * (non-Javadoc)
-     * 
+     *
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((this.imdb_id == null) ? 0 : this.imdb_id.hashCode());
+        return result;
+    }
+
+    /**
+     * @param genre the genre to set
+     */
+    public void setGenre(final MovieGenre genre) {
+        this.genre = genre;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(final Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @param imdb_id the imdb_id to set
+     */
+    public void setImdb_id(final String imdb_id) {
+        this.imdb_id = imdb_id;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    /**
+     * @param similarMovies the similarMovies to set
+     */
+    public void setSimilarMovies(final Set<Movie> similarMovies) {
+        this.similarMovies = similarMovies;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return "Movie [id=" + id + ", imdb_id=" + imdb_id + ", name=" + name
-                + ", genre=" + genre + "]";
+        return "Movie [id=" + this.id + ", imdb_id=" + this.imdb_id + ", name="
+                + this.name + ", genre=" + this.genre + "]";
     }
 }

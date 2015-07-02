@@ -2,7 +2,7 @@ package com.jodisoft.recommendation.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jodisoft.recommendation.entities.User;
+import com.jodisoft.recommendation.model.User;
 
 /**
  * @author Jay Paulynice

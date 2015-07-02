@@ -1,4 +1,4 @@
-package com.jodisoft.recommendation.entities;
+package com.jodisoft.recommendation.model;
 
 /**
  * @author Jay Paulynice
