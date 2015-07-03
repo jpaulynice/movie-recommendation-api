@@ -23,7 +23,7 @@ Set up:
 5. Deploy to tomcat/jetty/other server
 
 Example:
-```javascript
+```json
 GET /api/v1/users/2/recommendations?limit=2
 {
     "movieRecommendation": {
