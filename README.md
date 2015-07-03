@@ -17,5 +17,5 @@ Recommend a set of movies that the user would enjoy.
 Set up:
 -------
 1. Update [DB Properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties) to have correct user/password to mysql db
-2. Run [DDL Script] (https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/recommendation.sql) to create database and tables
-3. Run [Initial Data] (https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/recommendation_ddl.sql) to populate tables.
+2. Run [DDL Script] (https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/recommendation_ddl.sql) to create database and tables
+3. Run [Initial Data] (https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/recommendation.sql) to populate tables.
