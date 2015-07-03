@@ -19,3 +19,32 @@ Set up:
 1. Update [DB Properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties) to have correct user/password to mysql db
 2. Run [DDL Script] (https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/recommendation_ddl.sql) to create database and tables
 3. Run [Initial Data] (https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/recommendation.sql) to populate tables.
+4. Run 'gradle clean build'
+5. Deploy to tomcat/jetty/other server
+
+Example:
+```javascript
+GET /api/v1/users/2/recommendations?limit=2
+{
+    "movieRecommendation": {
+        "movies": [
+            {
+                "genre": "ACTION",
+                "id": 3,
+                "imdb_id": "tt0462499",
+                "name": "rambo"
+            },
+            {
+                "genre": "ACTION",
+                "id": 1,
+                "imdb_id": "tt0103923",
+                "name": "captain america"
+            }
+        ]
+    }
+}
+```
+
+
+
+
