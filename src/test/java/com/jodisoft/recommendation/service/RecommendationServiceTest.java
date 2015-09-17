@@ -1,5 +1,7 @@
 package com.jodisoft.recommendation.service;
 
+import javax.ws.rs.core.Response;
+
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,7 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 /**
- * Test service class
+ * Test recommendation service class
  *
  * @author Jay Paulynice
  *
@@ -19,18 +21,25 @@ public class RecommendationServiceTest extends AbstractJUnit4SpringContextTests 
     private RecommendationService service;
 
     /**
+     * Test service wired correctly
+     *
      * @throws TasteException if errors
      */
     @Test
-    public void testMySqlRecommendationService() throws TasteException {
-        Assert.assertNotNull(this.service.recommend(2L, 3));
+    public void testApiNotNull() throws TasteException {
+        Assert.assertNotNull(this.service);
     }
 
     /**
      * @throws TasteException if errors
      */
     @Test
-    public void testNotNull() throws TasteException {
-        Assert.assertNotNull(this.service);
+    public void testRecommendationService() throws TasteException {
+        final Response res = this.service.recommend(2L, 3);
+
+        Assert.assertNotNull(res);
+        Assert.assertEquals(res.getStatus(), 200);
+
+        Assert.assertNotNull(res.getEntity());
     }
 }

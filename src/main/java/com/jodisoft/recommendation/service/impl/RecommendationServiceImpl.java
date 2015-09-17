@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLBooleanPrefJDBCDataModel;
 import org.apache.mahout.cf.taste.impl.recommender.AllSimilarItemsCandidateItemsStrategy;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import com.jodisoft.recommendation.model.Movie;
 import com.jodisoft.recommendation.repository.MovieRepository;
+import com.jodisoft.recommendation.repository.UserRepository;
 import com.jodisoft.recommendation.service.RecommendationService;
 
 /**
@@ -34,24 +36,41 @@ import com.jodisoft.recommendation.service.RecommendationService;
  */
 @Service
 public class RecommendationServiceImpl implements RecommendationService {
+    private static final int DEFAULT_LIMIT = 10;
+
     private static final Logger logger = LoggerFactory
             .getLogger(RecommendationServiceImpl.class);
+
     private final DataSource dataSource;
-    private final MovieRepository movieRepository;
     private ItemBasedRecommender recommender;
+    private final MovieRepository repo;
+    private final UserRepository userRepo;
 
     /**
      * Default constructor with dataSource and movieService
      *
      * @param dataSource the dataSource to set
-     * @param movieRepository the movie repository
+     * @param repo the movie repository
+     * @param userRepo the user repository
      */
     @Autowired
     public RecommendationServiceImpl(final DataSource dataSource,
-            final MovieRepository movieRepository) {
-        this.movieRepository = movieRepository;
+            final MovieRepository repo, final UserRepository userRepo) {
+        this.repo = repo;
         this.dataSource = dataSource;
+        this.userRepo = userRepo;
         initRecommender();
+    }
+
+    private List<RecommendedItem> getItems(Long userId, int howMany) {
+        List<RecommendedItem> items = null;
+        try {
+            items = this.recommender.recommend(userId, howMany);
+        } catch (final TasteException e) {
+            logger.info("Exception occurred.", e);
+        }
+
+        return items;
     }
 
     /**
@@ -61,13 +80,13 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @return list of movie with details
      */
     private Set<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
-        final Set<Movie> recommendedMovies = new HashSet<>();
+        final Set<Movie> movies = new HashSet<>();
         for (final RecommendedItem item : items) {
-            final Movie movie = this.movieRepository.findOne(item.getItemID());
-            recommendedMovies.add(movie);
+            final Movie movie = this.repo.findOne(item.getItemID());
+            movies.add(movie);
         }
 
-        return recommendedMovies;
+        return movies;
     }
 
     /**
@@ -85,18 +104,26 @@ public class RecommendationServiceImpl implements RecommendationService {
                 similarity, candidateStrategy, candidateStrategy);
     }
 
+    private boolean inValidUser(Long userId) {
+        return this.userRepo.findOne(userId) == null;
+    }
+
     @Override
-    public Response recommend(final Long userId, final int howMany) {
-        List<RecommendedItem> items = null;
-        try {
-            items = this.recommender.recommend(userId, howMany);
-        } catch (final TasteException e) {
-            logger.info("Exception occurred.", e);
+    public Response recommend(final Long userId, int howMany) {
+        if (inValidUser(userId)) {
+            return Response.status(HttpStatus.SC_NOT_FOUND)
+                    .entity("No user found with id: " + userId).build();
         }
-        final Set<Movie> movies = getRecommendedMovies(items);
+
+        if (howMany <= 0) {
+            howMany = DEFAULT_LIMIT;
+        }
+
+        final Set<Movie> movies = getRecommendedMovies(getItems(userId, howMany));
         final GenericEntity<Set<Movie>> entities = new GenericEntity<Set<Movie>>(
                 movies) {
         };
+
         return Response.ok(entities).build();
     }
 }

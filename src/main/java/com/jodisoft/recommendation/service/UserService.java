@@ -8,8 +8,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * @author Jay Paulynice
+ * Simple interface for user api
  *
+ * @author Jay Paulynice
  */
 @Path("users")
 @Produces({ MediaType.APPLICATION_JSON })

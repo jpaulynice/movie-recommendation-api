@@ -45,12 +45,12 @@ public class Movie {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "taste_item_similarity", joinColumns = { @JoinColumn(
             name = "item_id_a") }, inverseJoinColumns = { @JoinColumn(
-                    name = "item_id_b") })
+            name = "item_id_b") })
     private Set<Movie> similarMovies;
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -107,7 +107,7 @@ public class Movie {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -156,7 +156,7 @@ public class Movie {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
