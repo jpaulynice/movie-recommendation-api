@@ -24,6 +24,6 @@ public interface RecommendationService {
      * @return set of recommended movies
      */
     @GET
-    public Response recommend(@PathParam("userId") Long userId,
+    Response recommend(@PathParam("userId") Long userId,
             @QueryParam("limit") int howMany);
 }
