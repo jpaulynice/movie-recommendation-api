@@ -23,5 +23,5 @@ public interface MovieService {
      */
     @GET
     @Path("{movieId}")
-    public Response find(@PathParam("movieId") Long movieId);
+    Response find(@PathParam("movieId") Long movieId);
 }
