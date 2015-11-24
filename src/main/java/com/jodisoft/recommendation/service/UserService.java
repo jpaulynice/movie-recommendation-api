@@ -23,5 +23,5 @@ public interface UserService {
      */
     @GET
     @Path("{userId}")
-    public Response find(@PathParam("userId") Long userId);
+    Response find(@PathParam("userId") Long userId);
 }
