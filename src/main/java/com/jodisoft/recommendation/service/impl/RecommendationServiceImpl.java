@@ -36,10 +36,9 @@ import com.jodisoft.recommendation.service.RecommendationService;
  */
 @Service
 public class RecommendationServiceImpl implements RecommendationService {
-    private static final int DEFAULT_LIMIT = 10;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(RecommendationServiceImpl.class);
+    private static final int DEFAULT_LIMIT = 10;
 
     private final DataSource dataSource;
     private ItemBasedRecommender recommender;
@@ -61,34 +60,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         this.userRepo = userRepo;
         initRecommender();
     }
-
-    private List<RecommendedItem> getItems(Long userId, int howMany) {
-        List<RecommendedItem> items = null;
-        try {
-            items = this.recommender.recommend(userId, howMany);
-        } catch (final TasteException e) {
-            logger.info("Exception occurred.", e);
-        }
-
-        return items;
-    }
-
-    /**
-     * For each recommended item, fetch the details from the database.
-     *
-     * @param items list of recommended items
-     * @return list of movie with details
-     */
-    private Set<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
-        final Set<Movie> movies = new HashSet<>();
-        for (final RecommendedItem item : items) {
-            final Movie movie = this.repo.findOne(item.getItemID());
-            movies.add(movie);
-        }
-
-        return movies;
-    }
-
+    
     /**
      * Initialize the recommender with a mysql datasource
      */
@@ -103,11 +75,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         this.recommender = new GenericItemBasedRecommender(dataModel,
                 similarity, candidateStrategy, candidateStrategy);
     }
-
-    private boolean inValidUser(Long userId) {
-        return this.userRepo.findOne(userId) == null;
-    }
-
+    
     @Override
     public Response recommend(final Long userId, int howMany) {
         if (inValidUser(userId)) {
@@ -125,5 +93,36 @@ public class RecommendationServiceImpl implements RecommendationService {
         };
 
         return Response.ok(entities).build();
+    }
+    
+    /**
+     * For each recommended item, fetch the details from the database.
+     *
+     * @param items list of recommended items
+     * @return list of movie with details
+     */
+    private Set<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
+        final Set<Movie> movies = new HashSet<>();
+        for (final RecommendedItem item : items) {
+            final Movie movie = this.repo.findOne(item.getItemID());
+            movies.add(movie);
+        }
+
+        return movies;
+    }
+
+    private List<RecommendedItem> getItems(Long userId, int howMany) {
+        List<RecommendedItem> items = null;
+        try {
+            items = this.recommender.recommend(userId, howMany);
+        } catch (final TasteException e) {
+            logger.info("Exception occurred.", e);
+        }
+
+        return items;
+    }
+
+    private boolean inValidUser(Long userId) {
+        return this.userRepo.findOne(userId) == null;
     }
 }
