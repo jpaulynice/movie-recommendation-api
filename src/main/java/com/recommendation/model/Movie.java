@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  * http://www.omdbapi.com/?t=planes
  *
- * @author Jay Paulynice
+ * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
 @Entity(name = "items")
 public class Movie {

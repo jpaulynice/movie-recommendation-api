@@ -15,7 +15,7 @@ import javax.persistence.ManyToMany;
 /**
  * User entity object
  *
- * @author Jay Paulynice
+ * @author Jay Paulynice (jay.paulynice@gmail.com)
  *
  */
 @Entity(name = "users")

@@ -3,7 +3,7 @@ package com.recommendation.model;
 /**
  * Movie genre enums
  *
- * @author Jay Paulynice
+ * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
 public enum MovieGenre {
     /**

@@ -18,10 +18,9 @@ import com.recommendation.model.Movie;
 import com.recommendation.service.RecommendationService;
 
 /**
- * Items similarity based recommendation engine with data stored in a MySQL
- * database.
+ * Jersey resource endpoint for our recommendation engine.
  *
- * @author Jay Paulynice
+ * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
 @Component
 @Path("users")

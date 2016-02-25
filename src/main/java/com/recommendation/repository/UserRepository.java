@@ -7,7 +7,7 @@ import com.recommendation.model.User;
 /**
  * User repository
  *
- * @author Jay Paulynice
+ * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
 public interface UserRepository extends CrudRepository<User, Long> {
     // nothing to see here

@@ -9,7 +9,6 @@ import javax.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -35,7 +34,6 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.recommendation.repository")
-@PropertySource("classpath:META-INF/properties/db.properties")
 public class SpringDataConfig {
     @Autowired
     private Environment env;

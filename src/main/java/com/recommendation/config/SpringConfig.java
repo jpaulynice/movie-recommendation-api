@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * Spring configuration using annotation replacing 'applicationContext.xml'
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Import;
                excludeFilters = @Filter(type = FilterType.REGEX,
                                         pattern = "com.recommendation.config.*"))
 @Import({ SpringDataConfig.class })
+@PropertySource("classpath:META-INF/properties/db.properties")
 public class SpringConfig {
     // nothing to see here yet
 }

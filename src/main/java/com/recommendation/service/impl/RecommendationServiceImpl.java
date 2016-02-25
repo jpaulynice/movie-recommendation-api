@@ -28,6 +28,10 @@ import com.recommendation.repository.MovieRepository;
 import com.recommendation.repository.UserRepository;
 import com.recommendation.service.RecommendationService;
 
+/**
+ * Default implementation for {@link RecommendationService}
+ * @author Jay Paulynice (jay.paulynice@gmail.com)
+ */
 @Service
 @Transactional
 public class RecommendationServiceImpl implements RecommendationService {
