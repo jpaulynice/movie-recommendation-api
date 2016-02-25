@@ -31,45 +31,14 @@ GET /api/v1/users/2/recommendations?limit=2
     "id": 4,
     "imdb_id": "tt0110419",
     "name": "mcgyver",
-    "similarMovies": [
-      {
-        "genre": "FAMILY",
-        "id": 5,
-        "imdb_id": "tt0317219",
-        "name": "cars",
-        "similarMovies": [
-          {
-            "genre": "FAMILY",
-            "id": 6,
-            "imdb_id": "tt1691917",
-            "name": "planes",
-            "similarMovies": []
-          }
-        ]
-      },
-      {
-        "genre": "FAMILY",
-        "id": 6,
-        "imdb_id": "tt1691917",
-        "name": "planes",
-        "similarMovies": []
-      }
-    ]
+    "similarMovies": [...]
   },
   {
     "genre": "FAMILY",
     "id": 5,
     "imdb_id": "tt0317219",
     "name": "cars",
-    "similarMovies": [
-      {
-        "genre": "FAMILY",
-        "id": 6,
-        "imdb_id": "tt1691917",
-        "name": "planes",
-        "similarMovies": []
-      }
-    ]
+    "similarMovies": [...]
   }
 ]
 ```
