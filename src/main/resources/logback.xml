@@ -14,9 +14,9 @@
 	</appender>
 
 	<logger name="com.recommendation" level="debug" />
-	<logger name="org.apache.mahout" level="warn" />
-	<logger name="org.springframework" level="warn" />
-	<logger name="org.hibernate" level="warn" />
+	<logger name="org.apache.mahout" level="debug" />
+	<logger name="org.springframework" level="debug" />
+	<logger name="org.hibernate" level="debug" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
