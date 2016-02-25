@@ -38,15 +38,13 @@ API Response
     "genre": "ACTION",
     "id": 4,
     "imdb_id": "tt0110419",
-    "name": "mcgyver",
-    "similarMovies": [...]
+    "name": "mcgyver"
   },
   {
     "genre": "FAMILY",
     "id": 5,
     "imdb_id": "tt0317219",
-    "name": "cars",
-    "similarMovies": [...]
+    "name": "cars"
   }
 ]
 ```
