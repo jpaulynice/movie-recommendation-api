@@ -70,7 +70,7 @@ public class SpringDataConfig {
     private DatabasePopulator dbPopulator() {
         final ResourceDatabasePopulator dbPopulator = new ResourceDatabasePopulator();
         dbPopulator
-        .addScript(new ClassPathResource("META-INF/data/sql/ddl.sql"));
+                .addScript(new ClassPathResource("META-INF/data/sql/ddl.sql"));
         dbPopulator.addScript(new ClassPathResource(
                 "META-INF/data/sql/init.sql"));
 

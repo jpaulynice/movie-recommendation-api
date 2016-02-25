@@ -15,7 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Movie entity for hibernate database persistence. Movie details can be fetched
@@ -25,7 +26,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Jay Paulynice
  */
-@XmlRootElement
 @Entity(name = "items")
 public class Movie {
     @Enumerated(EnumType.STRING)
@@ -43,6 +43,7 @@ public class Movie {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL,
                 fetch = FetchType.LAZY)
     @JoinTable(name = "taste_item_similarity",

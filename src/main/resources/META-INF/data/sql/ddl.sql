@@ -35,6 +35,7 @@ create table taste_preferences (
     foreign key (item_id) references items (item_id) on delete cascade 
 ); 
 
+--create taste similarity table
 create table taste_item_similarity (
     item_id_a bigint not null,
     item_id_b bigint not null,
@@ -44,6 +45,7 @@ create table taste_item_similarity (
     foreign key (item_id_b) references items (item_id) on delete cascade 
 ); 
 
+--create indexes
 create index item_preferences_index1 on taste_preferences (user_id, item_id); 
 create index item_preferences_index2 on taste_preferences (user_id); 
 create index item_preferences_index3 on taste_preferences (item_id);
