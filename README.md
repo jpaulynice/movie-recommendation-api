@@ -29,6 +29,10 @@ On Startup, the application runs these 2 scripts under: `src/main/resources/META
 REST API Example:
 ```java
 GET localhost:8080/<some-name>/api/v1/users/2/recommendations?limit=2
+```
+
+API Response
+```json
 [
   {
     "genre": "ACTION",
