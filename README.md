@@ -14,13 +14,15 @@ Given:
 
 Recommend a set of movies that the user would enjoy.
 
-On Startup, the application runs the scripts under `src/main/resources/META-INF/data/sql` to create the tables and initial data.
+Setup
 -------
 1. Update [DB Properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties) to have correct user/password to mysql db
 2. Run 'gradle clean build'
 3. Deploy to tomcat/jetty/other server
 
-Example:
+On Startup, the application runs the scripts under `src/main/resources/META-INF/data/sql` to create the tables and initial data.
+
+REST API Example:
 ```json
 GET localhost:8080/{appName}/api/v1/users/2/recommendations?limit=2
 [
