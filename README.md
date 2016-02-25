@@ -17,14 +17,14 @@ Recommend a set of movies that the user would enjoy.
 Setup
 -------
 1. Update [DB Properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties) to have correct user/password to mysql db
-2. Run 'gradle clean build'
-3. Deploy to tomcat/jetty/other server
+2. Run `gradle clean build`
+3. `cp -r build/libs/movie-recommendation-engine.war TOMCAT_HOME/webapps/app.war`
 
 On Startup, the application runs the scripts under `src/main/resources/META-INF/data/sql` to create the tables and initial data.
 
 REST API Example:
-```json
-GET localhost:8080/{appName}/api/v1/users/2/recommendations?limit=2
+```java
+GET localhost:8080/app/api/v1/users/2/recommendations?limit=2
 [
   {
     "genre": "ACTION",
