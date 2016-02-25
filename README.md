@@ -31,7 +31,7 @@ REST API Example:
 GET localhost:8080/<some-name>/api/v1/users/2/recommendations?limit=2
 ```
 
-API Response
+API Response:
 ```json
 [
   {
@@ -47,6 +47,20 @@ API Response
     "name": "cars"
   }
 ]
+```
+
+Try an invalid user with id 9000:
+```java
+GET localhost:8080/<some-name>/api/v1/users/9000/recommendations?limit=2
+```
+
+Response:
+```json
+{
+    "status": 404,
+    "info": "No user found with id: 9000",
+    "requestId": "880a6889-3969-43dc-9de1-4692d69ff807"
+}
 ```
 
 
