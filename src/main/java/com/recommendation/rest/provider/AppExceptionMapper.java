@@ -6,6 +6,8 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.recommendation.exception.AbstractBaseException;
@@ -19,6 +21,8 @@ import com.recommendation.model.Message;
 @Component
 @Provider
 public class AppExceptionMapper implements ExceptionMapper<RuntimeException> {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     /*
      * (non-Javadoc)
      * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
@@ -34,6 +38,8 @@ public class AppExceptionMapper implements ExceptionMapper<RuntimeException> {
         } else {
             message = genericMessage();
         }
+        
+        logger.debug("An exception occurred: {}", message);
         return Response.status(message.getStatus()).entity(message).build();
     }
 
