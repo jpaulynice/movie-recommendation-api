@@ -1,14 +1,11 @@
-package com.jodisoft.recommendation.service.impl;
+package com.recommendation.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.sql.DataSource;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.Response;
 
-import org.apache.commons.httpclient.HttpStatus;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLBooleanPrefJDBCDataModel;
 import org.apache.mahout.cf.taste.impl.recommender.AllSimilarItemsCandidateItemsStrategy;
@@ -22,19 +19,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.jodisoft.recommendation.model.Movie;
-import com.jodisoft.recommendation.repository.MovieRepository;
-import com.jodisoft.recommendation.repository.UserRepository;
-import com.jodisoft.recommendation.service.RecommendationService;
+import com.recommendation.exception.UserNotFoundException;
+import com.recommendation.model.Movie;
+import com.recommendation.repository.MovieRepository;
+import com.recommendation.repository.UserRepository;
+import com.recommendation.service.RecommendationService;
 
-/**
- * Items similarity based recommendation engine with data stored in a MySQL
- * database.
- *
- * @author Jay Paulynice
- */
 @Service
+@Transactional
 public class RecommendationServiceImpl implements RecommendationService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -60,41 +55,41 @@ public class RecommendationServiceImpl implements RecommendationService {
         this.userRepo = userRepo;
         initRecommender();
     }
-    
+
     /**
      * Initialize the recommender with a mysql datasource
      */
     private void initRecommender() {
         logger.debug("initializing mysql item similarity and preference data model.");
         final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(
-                this.dataSource);
+                dataSource);
         final AllSimilarItemsCandidateItemsStrategy candidateStrategy = new AllSimilarItemsCandidateItemsStrategy(
                 similarity);
         final DataModel dataModel = new MySQLBooleanPrefJDBCDataModel(
-                this.dataSource);
-        this.recommender = new GenericItemBasedRecommender(dataModel,
-                similarity, candidateStrategy, candidateStrategy);
+                dataSource);
+        recommender = new GenericItemBasedRecommender(dataModel, similarity,
+                candidateStrategy, candidateStrategy);
     }
-    
+
+    public boolean inValidUser(final Long userId) {
+        return userRepo.findOne(userId) == null;
+    }
+
     @Override
-    public Response recommend(final Long userId, int howMany) {
+    @Transactional(propagation = Propagation.REQUIRED,
+                   readOnly = true)
+    public Set<Movie> recommend(final Long userId, int howMany) {
         if (inValidUser(userId)) {
-            return Response.status(HttpStatus.SC_NOT_FOUND)
-                    .entity("No user found with id: " + userId).build();
+            throw new UserNotFoundException("No user found with id: " + userId);
         }
 
         if (howMany <= 0) {
             howMany = DEFAULT_LIMIT;
         }
 
-        final Set<Movie> movies = getRecommendedMovies(getItems(userId, howMany));
-        final GenericEntity<Set<Movie>> entities = new GenericEntity<Set<Movie>>(
-                movies) {
-        };
-
-        return Response.ok(entities).build();
+        return getRecommendedMovies(getItems(userId, howMany));
     }
-    
+
     /**
      * For each recommended item, fetch the details from the database.
      *
@@ -104,25 +99,21 @@ public class RecommendationServiceImpl implements RecommendationService {
     private Set<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
         final Set<Movie> movies = new HashSet<>();
         for (final RecommendedItem item : items) {
-            final Movie movie = this.repo.findOne(item.getItemID());
+            final Movie movie = repo.findOne(item.getItemID());
             movies.add(movie);
         }
 
         return movies;
     }
 
-    private List<RecommendedItem> getItems(Long userId, int howMany) {
+    private List<RecommendedItem> getItems(final Long userId, final int howMany) {
         List<RecommendedItem> items = null;
         try {
-            items = this.recommender.recommend(userId, howMany);
+            items = recommender.recommend(userId, howMany);
         } catch (final TasteException e) {
             logger.info("Exception occurred.", e);
         }
 
         return items;
-    }
-
-    private boolean inValidUser(Long userId) {
-        return this.userRepo.findOne(userId) == null;
     }
 }

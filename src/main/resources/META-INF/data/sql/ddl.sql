@@ -1,4 +1,5 @@
-CREATE DATABASE recommendationdb; 
+  DROP DATABASE IF EXISTS recommendationdb;
+  CREATE DATABASE recommendationdb; 
   USE recommendationdb; 
   
   CREATE TABLE items (

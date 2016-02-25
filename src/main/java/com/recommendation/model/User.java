@@ -1,4 +1,4 @@
-package com.jodisoft.recommendation.model;
+package com.recommendation.model;
 
 import java.util.Set;
 
@@ -34,10 +34,11 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "taste_preferences", joinColumns = { @JoinColumn(
-            name = "user_id") }, inverseJoinColumns = { @JoinColumn(
-                    name = "item_id") })
+    @ManyToMany(cascade = CascadeType.ALL,
+                fetch = FetchType.EAGER)
+    @JoinTable(name = "taste_preferences",
+               joinColumns = { @JoinColumn(name = "user_id") },
+               inverseJoinColumns = { @JoinColumn(name = "item_id") })
     private Set<Movie> moviePreferences;
 
     /**
@@ -104,7 +105,6 @@ public class User {
 
     /*
      * (non-Javadoc)
-     *
      * @see java.lang.Object#toString()
      */
     @Override

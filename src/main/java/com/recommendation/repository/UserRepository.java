@@ -1,8 +1,8 @@
-package com.jodisoft.recommendation.repository;
+package com.recommendation.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.jodisoft.recommendation.model.User;
+import com.recommendation.model.User;
 
 /**
  * User repository

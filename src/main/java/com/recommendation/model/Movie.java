@@ -1,5 +1,6 @@
-package com.jodisoft.recommendation.model;
+package com.recommendation.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -42,81 +43,46 @@ public class Movie {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "taste_item_similarity", joinColumns = { @JoinColumn(
-            name = "item_id_a") }, inverseJoinColumns = { @JoinColumn(
-            name = "item_id_b") })
-    private Set<Movie> similarMovies;
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        final Movie other = (Movie) obj;
-        if (this.imdb_id == null) {
-            if (other.imdb_id != null)
-                return false;
-        } else if (!this.imdb_id.equals(other.imdb_id))
-            return false;
-        return true;
-    }
+    @ManyToMany(cascade = CascadeType.ALL,
+                fetch = FetchType.LAZY)
+    @JoinTable(name = "taste_item_similarity",
+               joinColumns = { @JoinColumn(name = "item_id_a") },
+               inverseJoinColumns = { @JoinColumn(name = "item_id_b") })
+    private Set<Movie> similarMovies = new HashSet<>();
 
     /**
      * @return the genre
      */
     public MovieGenre getGenre() {
-        return this.genre;
+        return genre;
     }
 
     /**
      * @return the id
      */
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     /**
      * @return the imdb_id
      */
     public String getImdb_id() {
-        return this.imdb_id;
+        return imdb_id;
     }
 
     /**
      * @return the name
      */
     public String getName() {
-        return this.name;
+        return name;
     }
 
     /**
      * @return the similarMovies
      */
     public Set<Movie> getSimilarMovies() {
-        return this.similarMovies;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result
-                + ((this.imdb_id == null) ? 0 : this.imdb_id.hashCode());
-        return result;
+        return similarMovies;
     }
 
     /**
@@ -156,12 +122,49 @@ public class Movie {
 
     /*
      * (non-Javadoc)
-     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((imdb_id == null) ? 0 : imdb_id.hashCode());
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Movie other = (Movie) obj;
+        if (imdb_id == null) {
+            if (other.imdb_id != null) {
+                return false;
+            }
+        } else if (!imdb_id.equals(other.imdb_id)) {
+            return false;
+        }
+        return true;
+    }
+
+    /*
+     * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return "Movie [id=" + this.id + ", imdb_id=" + this.imdb_id + ", name="
-                + this.name + ", genre=" + this.genre + "]";
+        return "Movie [id=" + id + ", imdb_id=" + imdb_id + ", name=" + name
+                + ", genre=" + genre + "]";
     }
 }

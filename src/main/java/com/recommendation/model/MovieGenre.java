@@ -1,4 +1,4 @@
-package com.jodisoft.recommendation.model;
+package com.recommendation.model;
 
 /**
  * Movie genre enums
