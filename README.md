@@ -16,14 +16,14 @@ Recommend a set of movies that the user would enjoy.
 
 Setup
 -------
-1. create recommendation db `create database recommendationdb`
-2. update [DB Properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties) to have correct url, user/password and db driver to database. 
+1. create recommendation db: `create database recommendationdb`
+2. update [db properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties): to have correct url, user/password and db driver to database. 
 3. run `gradle clean build`
 4. deploy api: `cp -r build/libs/movie-recommendation-engine.war $TOMCAT_HOME/webapps/<some-name>.war`
 
 On Startup, the application runs these 2 scripts under: `src/main/resources/META-INF/data/sql` 
-1. [recreate tables](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/ddl.sql) to create the tables 
-2. [populate data](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/init.sql)and initial data.
+1. [recreate tables](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/ddl.sql)
+2. [populate data](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/init.sql)
 
 REST API Example:
 ```java
