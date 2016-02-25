@@ -14,7 +14,7 @@ Given:
 
 Recommend a set of movies that the user would enjoy.
 
-Set up:
+On Startup, the application create a `recommendationdb` database
 -------
 1. Update [DB Properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties) to have correct user/password to mysql db
 2. Run [DDL Script] (https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/recommendation_ddl.sql) to create database and tables
@@ -25,24 +25,22 @@ Set up:
 Example:
 ```json
 GET /api/v1/users/2/recommendations?limit=2
-{
-    "movieRecommendation": {
-        "movies": [
-            {
-                "genre": "ACTION",
-                "id": 3,
-                "imdb_id": "tt0462499",
-                "name": "rambo"
-            },
-            {
-                "genre": "ACTION",
-                "id": 1,
-                "imdb_id": "tt0103923",
-                "name": "captain america"
-            }
-        ]
-    }
-}
+[
+  {
+    "genre": "ACTION",
+    "id": 4,
+    "imdb_id": "tt0110419",
+    "name": "mcgyver",
+    "similarMovies": [...]
+  },
+  {
+    "genre": "FAMILY",
+    "id": 5,
+    "imdb_id": "tt0317219",
+    "name": "cars",
+    "similarMovies": [...]
+  }
+]
 ```
 
 
