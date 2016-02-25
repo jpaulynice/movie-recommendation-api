@@ -1,5 +1,6 @@
 package com.recommendation.rest.v1;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 import javax.ws.rs.core.Response;
@@ -13,6 +14,7 @@ public class RecommendationResourceTest extends BaseJerseyTest {
                 .get();
 
         assertNotNull(response);
+        assertEquals(response.getStatus(), 200);
     }
 
     @Test
@@ -21,6 +23,8 @@ public class RecommendationResourceTest extends BaseJerseyTest {
                 .request().get();
 
         assertNotNull(response);
+        // user doesn't exist
+        assertEquals(response.getStatus(), 404);
     }
 
     @Test
@@ -28,5 +32,7 @@ public class RecommendationResourceTest extends BaseJerseyTest {
         final Response response = target("blah").request().get();
 
         assertNotNull(response);
+        // not valid url
+        assertEquals(response.getStatus(), 404);
     }
 }
