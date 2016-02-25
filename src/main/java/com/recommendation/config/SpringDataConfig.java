@@ -1,9 +1,10 @@
 package com.recommendation.config;
 
+import java.beans.PropertyVetoException;
 import java.util.Properties;
 
+import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
@@ -22,6 +22,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
  * Configuration for Spring Data/JPA using annotations. This assumes the
@@ -39,7 +41,8 @@ public class SpringDataConfig {
     private Environment env;
 
     @Bean
-    EntityManagerFactory entityManagerFactory() {
+    EntityManagerFactory entityManagerFactory() throws NamingException,
+            PropertyVetoException {
         final HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
         adapter.setGenerateDdl(false);
 
@@ -54,10 +57,10 @@ public class SpringDataConfig {
     }
 
     @Bean
-    DataSource dataSource() {
-        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("db.driver"));
-        dataSource.setUrl(env.getProperty("db.url"));
+    ComboPooledDataSource dataSource() throws PropertyVetoException {
+        final ComboPooledDataSource dataSource = new ComboPooledDataSource();
+        dataSource.setDriverClass(env.getProperty("db.driver"));
+        dataSource.setJdbcUrl(env.getProperty("db.url"));
 
         DatabasePopulatorUtils.execute(dbPopulator(), dataSource);
 
@@ -67,7 +70,7 @@ public class SpringDataConfig {
     private DatabasePopulator dbPopulator() {
         final ResourceDatabasePopulator dbPopulator = new ResourceDatabasePopulator();
         dbPopulator
-                .addScript(new ClassPathResource("META-INF/data/sql/ddl.sql"));
+        .addScript(new ClassPathResource("META-INF/data/sql/ddl.sql"));
         dbPopulator.addScript(new ClassPathResource(
                 "META-INF/data/sql/init.sql"));
 
@@ -79,6 +82,10 @@ public class SpringDataConfig {
         final Properties props = new Properties();
         props.setProperty("hibernate.dialect",
                 "org.hibernate.dialect.MySQL5Dialect");
+        props.setProperty("hibernate.c3p0.min_size", "5");
+        props.setProperty("hibernate.c3p0.max_size", "20");
+        props.setProperty("hibernate.c3p0.timeout", "1800");
+        props.setProperty("hibernate.c3p0.max_statements", "50");
 
         return props;
     }
