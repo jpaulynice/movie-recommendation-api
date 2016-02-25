@@ -1,4 +1,4 @@
---create databse recommendationdb;
+--assumes database exists if not then 'create database recommendationdb';
 
 drop table if exists taste_item_similarity;
 drop table if exists taste_preferences;
