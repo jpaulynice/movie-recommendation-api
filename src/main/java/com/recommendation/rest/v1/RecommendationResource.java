@@ -24,7 +24,7 @@ import com.recommendation.service.RecommendationService;
  * @author Jay Paulynice
  */
 @Component
-@Path("users/{userId}/recommendations")
+@Path("users")
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class RecommendationResource {
     private final RecommendationService service;
@@ -35,6 +35,7 @@ public class RecommendationResource {
     }
 
     @GET
+    @Path("{userId}/recommendations")
     public Response recommend(@PathParam("userId") final Long userId,
             @QueryParam("limit") final int limit) {
         final Set<Movie> vals = service.recommend(userId, limit);

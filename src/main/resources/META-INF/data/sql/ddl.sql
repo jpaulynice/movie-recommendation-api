@@ -1,39 +1,49 @@
-  DROP DATABASE IF EXISTS recommendationdb;
-  CREATE DATABASE recommendationdb; 
-  USE recommendationdb; 
-  
-  CREATE TABLE items (
-     item_id BIGINT NOT NULL AUTO_INCREMENT, 
-     name varchar (100) NOT NULL, 
-     type varchar (100) default NULL,
-     imdb_id varchar (100) default NULL,
-     PRIMARY KEY (item_id) 
-  ); 
+--create databse recommendationdb;
 
-  CREATE TABLE users ( 
-     user_id BIGINT NOT NULL AUTO_INCREMENT,
-     name varchar (50) NOT NULL, 
-     email varchar (100) default NULL, 
-     PRIMARY KEY (user_id) 
-  ); 
+drop table if exists taste_item_similarity;
+drop table if exists taste_preferences;
+drop table if exists users;
+drop table if exists items;
 
-  CREATE TABLE taste_preferences (
-     user_id BIGINT NOT NULL, 
-     item_id BIGINT NOT NULL, 
-     preference INTEGER NOT NULL, 
-     timestamp timestamp not null default current_timestamp, 
-     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE, 
-     FOREIGN KEY (item_id) REFERENCES items (item_id) ON DELETE CASCADE 
-  ); 
+--items table
+create table items (
+    item_id bigint not null auto_increment, 
+    name varchar (100) not null, 
+    type varchar (100) default null,
+    imdb_id varchar (100) default null,
+    
+    primary key (item_id) 
+); 
 
-  CREATE TABLE taste_item_similarity (
-     item_id_a BIGINT NOT NULL, 
-     item_id_b BIGINT NOT NULL, 
-     similarity DOUBLE NOT NULL, 
-     FOREIGN KEY (item_id_a) REFERENCES items (item_id) ON DELETE CASCADE, 
-     FOREIGN KEY (item_id_b) REFERENCES items (item_id) ON DELETE CASCADE 
-  ); 
+--users table
+create table users ( 
+    user_id bigint not null auto_increment,
+    name varchar (50) NOT null,
+    email varchar (100) default null,
+    
+    primary key (user_id) 
+); 
 
-  CREATE INDEX item_preferences_index1 ON taste_preferences (user_id, item_id); 
-  CREATE INDEX item_preferences_index2 ON taste_preferences (user_id); 
-  CREATE INDEX item_preferences_index3 ON taste_preferences (item_id);
+--taste preference table
+create table taste_preferences (
+    user_id bigint not null,
+    item_id bigint not null,
+    preference integer not null,
+    timestamp timestamp not null default current_timestamp,
+    
+    foreign key (user_id) references users (user_id) on delete cascade,
+    foreign key (item_id) references items (item_id) on delete cascade 
+); 
+
+create table taste_item_similarity (
+    item_id_a bigint not null,
+    item_id_b bigint not null,
+    similarity double not null,
+    
+    foreign key (item_id_a) references items (item_id) on delete cascade,
+    foreign key (item_id_b) references items (item_id) on delete cascade 
+); 
+
+create index item_preferences_index1 on taste_preferences (user_id, item_id); 
+create index item_preferences_index2 on taste_preferences (user_id); 
+create index item_preferences_index3 on taste_preferences (item_id);
