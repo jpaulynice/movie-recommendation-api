@@ -17,7 +17,7 @@ Recommend a set of movies that the user would enjoy.
 Setup
 -------
 1. create recommendation db: `create database recommendationdb`
-2. update [db properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties): to have correct url, user/password and db driver to database. 
+2. update [db properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties): to have correct url, user/password to mysql database
 3. run `gradle clean build`
 4. deploy api: `cp -r build/libs/movie-recommendation-engine.war $TOMCAT_HOME/webapps/<some-name>.war`
 
