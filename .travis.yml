@@ -1,0 +1,15 @@
+language: java
+jdk:
+  - oraclejdk8
+services:
+  - mysql
+env:
+  matrix:
+  - TERM=dumb
+before_install:
+  - chmod +x gradlew
+before_script:
+  - mysql -e 'create database recommendationdb;' -uroot
+script: ./gradlew build jacocoTestReport
+after_success:
+  - ./gradlew jacocoTestReport coveralls
