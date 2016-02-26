@@ -35,16 +35,18 @@ API Response:
 ```json
 [
   {
-    "genre": "ACTION",
+    "genre": "DRAMA",
     "id": 4,
-    "imdb_id": "tt0110419",
-    "name": "mcgyver"
+    "imdb_id": "tt0120338",
+    "name": "titanic",
+    "img": "http://ia.media-imdb.com/images/M/MV5BMjExNzM0NDM0N15BMl5BanBnXkFtZTcwMzkxOTUwNw@@._V1_SX300.jpg"
   },
   {
     "genre": "FAMILY",
     "id": 5,
     "imdb_id": "tt0317219",
-    "name": "cars"
+    "name": "cars",
+    "img": "http://ia.media-imdb.com/images/M/MV5BMTg5NzY0MzA2MV5BMl5BanBnXkFtZTYwNDc3NTc2._V1_SX300.jpg"
   }
 ]
 ```
