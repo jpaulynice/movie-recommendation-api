@@ -3,9 +3,14 @@ package com.recommendation.rest.v1;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
+import java.util.Set;
+
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import org.testng.annotations.Test;
+
+import com.recommendation.model.Movie;
 
 public class RecommendationResourceTest extends BaseJerseyTest {
     @Test
@@ -15,6 +20,12 @@ public class RecommendationResourceTest extends BaseJerseyTest {
 
         assertNotNull(response);
         assertEquals(response.getStatus(), 200);
+
+        final Set<Movie> ents = response
+                .readEntity(new GenericType<Set<Movie>>() {
+                });
+        assertNotNull(ents);
+        assertEquals(ents.size(), 2);
     }
 
     @Test

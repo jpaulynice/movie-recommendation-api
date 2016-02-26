@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
+@XmlRootElement
 @Entity(name = "items")
 public class Movie {
     @Enumerated(EnumType.STRING)
@@ -42,6 +45,10 @@ public class Movie {
 
     @Column(name = "name")
     private String name;
+
+    @XmlElement
+    @Column(name = "img")
+    private String img;
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL,
@@ -165,7 +172,7 @@ public class Movie {
      */
     @Override
     public String toString() {
-        return "Movie [id=" + id + ", imdb_id=" + imdb_id + ", name=" + name
-                + ", genre=" + genre + "]";
+        return "Movie [genre=" + genre + ", id=" + id + ", imdb_id=" + imdb_id
+                + ", name=" + name + ", img=" + img + "]";
     }
 }

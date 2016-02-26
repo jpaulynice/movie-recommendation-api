@@ -38,7 +38,7 @@ public class AppExceptionMapper implements ExceptionMapper<RuntimeException> {
         } else {
             message = genericMessage();
         }
-        
+
         logger.debug("An exception occurred: {}", message);
         return Response.status(message.getStatus()).entity(message).build();
     }

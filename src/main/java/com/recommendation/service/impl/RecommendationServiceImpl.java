@@ -30,7 +30,7 @@ import com.recommendation.service.RecommendationService;
 
 /**
  * Default implementation for {@link RecommendationService}
- * 
+ *
  * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
 @Service
@@ -116,7 +116,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         try {
             items = recommender.recommend(userId, howMany);
         } catch (final TasteException e) {
-            logger.info("Exception occurred.", e);
+            logger.error("Exception occurred.", e);
         }
 
         return items;

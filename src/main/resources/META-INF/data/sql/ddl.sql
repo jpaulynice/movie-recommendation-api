@@ -7,29 +7,30 @@ drop table if exists items;
 
 --items table
 create table items (
-    item_id bigint not null auto_increment, 
-    name varchar (100) not null, 
-    type varchar (100) default null,
-    imdb_id varchar (100) default null,
+    item_id      bigint not null auto_increment, 
+    name         varchar (100) not null, 
+    type         varchar (100) default null,
+    imdb_id      varchar (100) default null,
+    img          varchar (2000) default null,
     
     primary key (item_id) 
 ); 
 
 --users table
 create table users ( 
-    user_id bigint not null auto_increment,
-    name varchar (50) NOT null,
-    email varchar (100) default null,
+    user_id      bigint not null auto_increment,
+    name         varchar (50) NOT null,
+    email        varchar (100) default null,
     
     primary key (user_id) 
 ); 
 
 --taste preference table
 create table taste_preferences (
-    user_id bigint not null,
-    item_id bigint not null,
-    preference integer not null,
-    timestamp timestamp not null default current_timestamp,
+    user_id      bigint not null,
+    item_id      bigint not null,
+    preference   integer not null,
+    timestamp    timestamp not null default current_timestamp,
     
     foreign key (user_id) references users (user_id) on delete cascade,
     foreign key (item_id) references items (item_id) on delete cascade 
@@ -37,9 +38,9 @@ create table taste_preferences (
 
 --create taste similarity table
 create table taste_item_similarity (
-    item_id_a bigint not null,
-    item_id_b bigint not null,
-    similarity double not null,
+    item_id_a    bigint not null,
+    item_id_b    bigint not null,
+    similarity   double not null,
     
     foreign key (item_id_a) references items (item_id) on delete cascade,
     foreign key (item_id_b) references items (item_id) on delete cascade 
