@@ -16,6 +16,27 @@ import com.recommendation.model.Movie;
 import com.recommendation.model.User;
 
 public class RecommendationResourceTest extends BaseJerseyTest {
+
+    @Test
+    public void testGetUser() {
+        final Response response = target("users/1").request().get();
+
+        assertNotNull(response);
+        assertEquals(response.getStatus(), 200);
+
+        final User u = response.readEntity(User.class);
+
+        assertNotNull(u);
+        assertNotNull(u.getEmail());
+        assertNotNull(u.getFirstName());
+        assertNotNull(u.getMoviePreferences());
+        assertNotNull(u.toString());
+        assertNotNull(u.hashCode());
+
+        final Long id = 1L;
+        assertEquals(u.getId(), id);
+    }
+
     @Test
     public void testGet() {
         final Response response = target("users/1/recommendations").request()

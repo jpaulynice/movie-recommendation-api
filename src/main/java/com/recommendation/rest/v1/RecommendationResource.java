@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.recommendation.model.Movie;
+import com.recommendation.model.User;
 import com.recommendation.service.RecommendationService;
 
 /**
@@ -31,6 +32,14 @@ public class RecommendationResource {
     @Autowired
     public RecommendationResource(final RecommendationService service) {
         this.service = service;
+    }
+
+    @GET
+    @Path("{userId}")
+    public Response getUser(@PathParam("userId") final Long id) {
+        final User u = service.getUser(id);
+
+        return Response.ok(u).build();
     }
 
     @GET

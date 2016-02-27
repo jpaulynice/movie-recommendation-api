@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.recommendation.exception.UserNotFoundException;
 import com.recommendation.model.Movie;
+import com.recommendation.model.User;
 import com.recommendation.repository.MovieRepository;
 import com.recommendation.repository.UserRepository;
 import com.recommendation.service.RecommendationService;
@@ -76,23 +77,29 @@ public class RecommendationServiceImpl implements RecommendationService {
                 candidateStrategy, candidateStrategy);
     }
 
-    public boolean inValidUser(final Long userId) {
-        return userRepo.findOne(userId) == null;
-    }
-
     @Override
     @Transactional(propagation = Propagation.REQUIRED,
                    readOnly = true)
     public Set<Movie> recommend(final Long userId, int howMany) {
-        if (inValidUser(userId)) {
-            throw new UserNotFoundException("No user found with id: " + userId);
-        }
+        User user = getUser(userId);
 
         if (howMany <= 0) {
             howMany = DEFAULT_LIMIT;
         }
 
-        return getRecommendedMovies(getItems(userId, howMany));
+        return getRecommendedMovies(getItems(user.getId(), howMany));
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED,
+                   readOnly = true)
+    public User getUser(final Long id) {
+        User u = userRepo.findOne(id);
+        if (u == null) {
+            throw new UserNotFoundException("No user found with id: " + id);
+        }
+
+        return u;
     }
 
     /**

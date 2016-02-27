@@ -3,6 +3,7 @@ package com.recommendation.service;
 import java.util.Set;
 
 import com.recommendation.model.Movie;
+import com.recommendation.model.User;
 
 /**
  * Items similarity based recommendation engine with data stored in a MySQL
@@ -12,4 +13,6 @@ import com.recommendation.model.Movie;
  */
 public interface RecommendationService {
     Set<Movie> recommend(final Long userId, final int limit);
+
+    User getUser(final Long id);
 }

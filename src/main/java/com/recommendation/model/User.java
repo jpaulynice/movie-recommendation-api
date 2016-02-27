@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * User entity object
@@ -18,6 +21,7 @@ import javax.persistence.ManyToMany;
  * @author Jay Paulynice (jay.paulynice@gmail.com)
  *
  */
+@XmlRootElement
 @Entity(name = "users")
 public class User {
     @Column(name = "email")
@@ -31,6 +35,7 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "taste_preferences",
                joinColumns = { @JoinColumn(name = "user_id") },
