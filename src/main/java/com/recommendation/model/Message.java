@@ -2,15 +2,22 @@ package com.recommendation.model;
 
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Object to show human readable message translation from the API.
  *
  * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
+@XmlRootElement
 public class Message {
     private int status;
     private String info;
-    private final UUID requestId;
+    private UUID requestId;
+
+    public Message() {
+        // nothing to see here
+    }
 
     public Message(final int status, final String info) {
         requestId = UUID.randomUUID();
@@ -30,20 +37,6 @@ public class Message {
      */
     public String getInfo() {
         return info;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(final int status) {
-        this.status = status;
-    }
-
-    /**
-     * @param info the info to set
-     */
-    public void setInfo(final String info) {
-        this.info = info;
     }
 
     public UUID getRequestId() {
@@ -68,19 +61,24 @@ public class Message {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        Message other = (Message) obj;
+        }
+        final Message other = (Message) obj;
         if (requestId == null) {
-            if (other.requestId != null)
+            if (other.requestId != null) {
                 return false;
-        } else if (!requestId.equals(other.requestId))
+            }
+        } else if (!requestId.equals(other.requestId)) {
             return false;
+        }
         return true;
     }
 

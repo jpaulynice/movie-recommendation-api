@@ -1,6 +1,7 @@
 package com.recommendation.rest.v1;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertNotNull;
 
 import java.util.Set;
@@ -10,7 +11,9 @@ import javax.ws.rs.core.Response;
 
 import org.testng.annotations.Test;
 
+import com.recommendation.model.Message;
 import com.recommendation.model.Movie;
+import com.recommendation.model.User;
 
 public class RecommendationResourceTest extends BaseJerseyTest {
     @Test
@@ -26,6 +29,21 @@ public class RecommendationResourceTest extends BaseJerseyTest {
                 });
         assertNotNull(ents);
         assertEquals(ents.size(), 2);
+
+        for (final Movie m : ents) {
+            assertNotNull(m.getId());
+            assertNotNull(m.getGenre());
+            assertNotNull(m.getImdb_id());
+            assertNotNull(m.getName());
+            assertNotNull(m.getSimilarMovies());
+
+            assertEquals(m, m);
+            assertNotEquals(m, null);
+            assertNotEquals(m, new Movie());
+            assertNotEquals(m, new User());
+            assertNotNull(m.toString());
+            assertNotNull(m.hashCode());
+        }
     }
 
     @Test
@@ -36,6 +54,17 @@ public class RecommendationResourceTest extends BaseJerseyTest {
         assertNotNull(response);
         // user doesn't exist
         assertEquals(response.getStatus(), 404);
+
+        final Message m = response.readEntity(Message.class);
+        assertNotNull(m);
+        assertNotNull(m.toString());
+        assertEquals(m, m);
+        assertNotNull(m.hashCode());
+
+        final Message m2 = new Message(404, "blah");
+        assertNotEquals(m, m2);
+        assertNotEquals(m, new Movie());
+        assertNotEquals(m, null);
     }
 
     @Test
