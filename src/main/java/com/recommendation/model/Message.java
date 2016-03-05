@@ -2,6 +2,7 @@ package com.recommendation.model;
 
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -11,8 +12,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Message {
+    @XmlElement
     private int status;
+
+    @XmlElement
     private String info;
+
+    @XmlElement
     private UUID requestId;
 
     public Message() {

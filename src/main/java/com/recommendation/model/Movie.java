@@ -33,16 +33,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Movie {
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
+    @XmlElement
     private MovieGenre genre;
 
     @Id
+    @XmlElement
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "item_id")
     private Long id;
 
+    @XmlElement
     @Column(name = "imdb_id")
     private String imdb_id;
 
+    @XmlElement
     @Column(name = "name")
     private String name;
 
