@@ -1,4 +1,6 @@
---assumes database exists if not then 'create database recommendationdb';
+--assumes database exists if not then run the following commands:
+--'create database recommendationdb'
+--'use recommendationdb';
 
 drop table if exists taste_item_similarity;
 drop table if exists taste_preferences;
