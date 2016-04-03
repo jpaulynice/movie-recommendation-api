@@ -16,7 +16,6 @@ import com.recommendation.model.Movie;
 import com.recommendation.model.User;
 
 public class RecommendationResourceTest extends BaseJerseyTest {
-
     @Test
     public void testGetUser() {
         final Response response = target("users/1").request().get();

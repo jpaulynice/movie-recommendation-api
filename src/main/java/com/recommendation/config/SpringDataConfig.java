@@ -57,7 +57,7 @@ public class SpringDataConfig {
 
     @Bean
     public DataSource dataSource() throws PropertyVetoException {
-        DriverManagerDataSource ds = new DriverManagerDataSource();
+        final DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName(env.getProperty("db.driver"));
         ds.setUrl(env.getProperty("db.url"));
 
@@ -67,13 +67,11 @@ public class SpringDataConfig {
     }
 
     private DatabasePopulator dbPopulator() {
-        final ResourceDatabasePopulator dbPopulator = new ResourceDatabasePopulator();
-        dbPopulator
-                .addScript(new ClassPathResource("META-INF/data/sql/ddl.sql"));
-        dbPopulator.addScript(new ClassPathResource(
-                "META-INF/data/sql/init.sql"));
+        final ResourceDatabasePopulator dp = new ResourceDatabasePopulator();
+        dp.addScript(new ClassPathResource("META-INF/data/sql/ddl.sql"));
+        dp.addScript(new ClassPathResource("META-INF/data/sql/init.sql"));
 
-        return dbPopulator;
+        return dp;
     }
 
     @Bean
