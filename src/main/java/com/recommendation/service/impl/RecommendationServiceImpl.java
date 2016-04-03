@@ -81,7 +81,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     @Transactional(propagation = Propagation.REQUIRED,
                    readOnly = true)
     public Set<Movie> recommend(final Long userId, int howMany) {
-        User user = getUser(userId);
+        final User user = getUser(userId);
 
         if (howMany <= 0) {
             howMany = DEFAULT_LIMIT;
@@ -94,7 +94,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     @Transactional(propagation = Propagation.REQUIRED,
                    readOnly = true)
     public User getUser(final Long id) {
-        User u = userRepo.findOne(id);
+        final User u = userRepo.findOne(id);
         if (u == null) {
             throw new UserNotFoundException("No user found with id: " + id);
         }
