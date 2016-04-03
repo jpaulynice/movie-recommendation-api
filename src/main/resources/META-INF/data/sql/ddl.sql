@@ -52,3 +52,5 @@ create table taste_item_similarity (
 create index item_preferences_index1 on taste_preferences (user_id, item_id); 
 create index item_preferences_index2 on taste_preferences (user_id); 
 create index item_preferences_index3 on taste_preferences (item_id);
+create index taste_item_similarity_index1 on taste_item_similarity (item_id_a);
+create index taste_item_similarity_index2 on taste_item_similarity (item_id_b);
