@@ -22,7 +22,7 @@ Setup
 1. create recommendation db: `create database recommendationdb`
 2. update [db properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties): to have correct url, user/password to mysql database
 3. run `gradle clean build`
-4. deploy api: `cp -r build/libs/movie-recommendation-engine.war $TOMCAT_HOME/webapps/<some-name>.war`
+4. deploy api: `cp -r build/libs/movie-recommendation-engine.war $TOMCAT_HOME/webapps/api.war`
 
 On Startup, the application runs these 2 scripts under: `src/main/resources/META-INF/data/sql` :
 
@@ -31,7 +31,7 @@ On Startup, the application runs these 2 scripts under: `src/main/resources/META
 
 REST API Example:
 ```java
-GET http://localhost:8080/<some-name>/api/v1/users/2/recommendations?limit=2
+GET http://localhost:8080/api/v1/users/2/recommendations?limit=2
 ```
 
 API Response:
