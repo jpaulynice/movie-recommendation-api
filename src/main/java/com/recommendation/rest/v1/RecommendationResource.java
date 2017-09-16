@@ -44,12 +44,10 @@ public class RecommendationResource {
 
     @GET
     @Path("{userId}/recommendations")
-    public Response recommend(@PathParam("userId") final Long userId,
-            @QueryParam("limit") final int limit) {
+    public Response recommend(@PathParam("userId") final Long userId, 
+                              @QueryParam("limit") final int limit) {
         final Set<Movie> vals = service.recommend(userId, limit);
-        final GenericEntity<Set<Movie>> res = new GenericEntity<Set<Movie>>(
-                vals) {
-        };
+        final GenericEntity<Set<Movie>> res = new GenericEntity<Set<Movie>>(vals) {};
 
         return Response.ok(res).build();
     }
