@@ -54,8 +54,7 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @param userRepo the user repository
      */
     @Autowired
-    public RecommendationServiceImpl(final DataSource dataSource,
-            final MovieRepository repo, final UserRepository userRepo) {
+    public RecommendationServiceImpl(final DataSource dataSource, final MovieRepository repo, final UserRepository userRepo) {
         this.repo = repo;
         this.dataSource = dataSource;
         this.userRepo = userRepo;
@@ -67,19 +66,15 @@ public class RecommendationServiceImpl implements RecommendationService {
      */
     private void initRecommender() {
         logger.debug("initializing mysql item similarity and preference data model.");
-        final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(
-                dataSource);
+        final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(dataSource);
         final AllSimilarItemsCandidateItemsStrategy candidateStrategy = new AllSimilarItemsCandidateItemsStrategy(
                 similarity);
-        final DataModel dataModel = new MySQLBooleanPrefJDBCDataModel(
-                dataSource);
-        recommender = new GenericItemBasedRecommender(dataModel, similarity,
-                candidateStrategy, candidateStrategy);
+        final DataModel dataModel = new MySQLBooleanPrefJDBCDataModel(dataSource);
+        recommender = new GenericItemBasedRecommender(dataModel, similarity,candidateStrategy, candidateStrategy);
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED,
-                   readOnly = true)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public Set<Movie> recommend(final Long userId, int howMany) {
         final User user = getUser(userId);
 
@@ -91,8 +86,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED,
-                   readOnly = true)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public User getUser(final Long id) {
         final User u = userRepo.findOne(id);
         if (u == null) {
