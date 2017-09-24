@@ -3,11 +3,14 @@ package com.recommendation.service.impl;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.sql.DataSource;
 
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLBooleanPrefJDBCDataModel;
+import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLJDBCDataModel;
+import org.apache.mahout.cf.taste.impl.model.jdbc.ReloadFromJDBCDataModel;
 import org.apache.mahout.cf.taste.impl.recommender.AllSimilarItemsCandidateItemsStrategy;
 import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.jdbc.MySQLJDBCInMemoryItemSimilarity;
@@ -69,8 +72,13 @@ public class RecommendationServiceImpl implements RecommendationService {
         final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(dataSource);
         final AllSimilarItemsCandidateItemsStrategy candidateStrategy = new AllSimilarItemsCandidateItemsStrategy(
                 similarity);
-        final DataModel dataModel = new MySQLBooleanPrefJDBCDataModel(dataSource);
-        recommender = new GenericItemBasedRecommender(dataModel, similarity,candidateStrategy, candidateStrategy);
+        DataModel dataModel;
+		try {
+			dataModel = new ReloadFromJDBCDataModel(new MySQLJDBCDataModel(dataSource));
+	        recommender = new GenericItemBasedRecommender(dataModel, similarity,candidateStrategy, candidateStrategy);
+		} catch (TasteException e) {
+			throw new RuntimeException("Unable to create the recommender. An exception occurred", e);
+		}
     }
 
     @Override
@@ -103,9 +111,11 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @return list of movie with details
      */
     private Set<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
-        final Set<Movie> movies = new HashSet<>();
+        final SortedSet<Movie> movies = new TreeSet<>();
+        int count = 0;
         for (final RecommendedItem item : items) {
             final Movie movie = repo.findOne(item.getItemID());
+            movie.setRank(++count);
             movies.add(movie);
         }
 

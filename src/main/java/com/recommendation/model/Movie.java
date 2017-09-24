@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -35,6 +36,10 @@ public class Movie {
     @Column(name = "type")
     @XmlElement
     private MovieGenre genre;
+    
+    @XmlElement
+    @Transient
+    private int rank;
 
     @Id
     @XmlElement
@@ -179,4 +184,12 @@ public class Movie {
         return "Movie [genre=" + genre + ", id=" + id + ", imdb_id=" + imdb_id
                 + ", name=" + name + ", img=" + img + "]";
     }
+
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
 }
