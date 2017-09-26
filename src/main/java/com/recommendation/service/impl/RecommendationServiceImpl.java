@@ -1,7 +1,6 @@
 package com.recommendation.service.impl;
 
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -54,7 +53,7 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Set<Movie> recommend(final Long userId, int howMany) {
+    public SortedSet<Movie> recommend(final Long userId, int howMany) {
         final User user = getUser(userId);
 
         if (howMany <= 0) {

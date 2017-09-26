@@ -1,6 +1,6 @@
 package com.recommendation.rest.v1;
 
-import java.util.Set;
+import java.util.SortedSet;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -46,8 +46,8 @@ public class RecommendationResource {
     @Path("{userId}/recommendations")
     public Response recommend(@PathParam("userId") final Long userId, 
                               @QueryParam("limit") final int limit) {
-        final Set<Movie> vals = service.recommend(userId, limit);
-        final GenericEntity<Set<Movie>> res = new GenericEntity<Set<Movie>>(vals) {};
+        final SortedSet<Movie> vals = service.recommend(userId, limit);
+        final GenericEntity<SortedSet<Movie>> res = new GenericEntity<SortedSet<Movie>>(vals) {};
 
         return Response.ok(res).build();
     }

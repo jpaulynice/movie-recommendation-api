@@ -4,7 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertNotNull;
 
-import java.util.Set;
+import java.util.SortedSet;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -44,8 +44,8 @@ public class RecommendationResourceTest extends BaseJerseyTest {
         assertNotNull(response);
         assertEquals(response.getStatus(), 200);
 
-        final Set<Movie> ents = response
-                .readEntity(new GenericType<Set<Movie>>() {
+        final SortedSet<Movie> ents = response
+                .readEntity(new GenericType<SortedSet<Movie>>() {
                 });
         assertNotNull(ents);
         assertEquals(ents.size(), 2);
