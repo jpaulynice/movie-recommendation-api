@@ -10,6 +10,6 @@ before_install:
   - chmod +x gradlew
 before_script:
   - mysql -e 'create database recommendationdb;' -uroot
-script: ./gradlew build jacocoTestReport
+script: ./gradlew build jacocoTestReport --stacktrace
 after_success:
   - ./gradlew jacocoTestReport coveralls
