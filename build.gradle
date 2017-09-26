@@ -53,7 +53,7 @@ dependencies {
     compile 'org.hibernate:hibernate-core:5.1.0.Final'
     compile 'org.hibernate:hibernate-entitymanager:5.1.0.Final'
     compile 'commons-dbcp:commons-dbcp:1.4'
-    compile ('org.apache.mahout:mahout-integration:0.11.2'){
+    compile ('org.apache.mahout:mahout-integration:0.13.0'){
         exclude group: 'com.sun.jersey'
         exclude group: 'org.apache.hadoop'
     }

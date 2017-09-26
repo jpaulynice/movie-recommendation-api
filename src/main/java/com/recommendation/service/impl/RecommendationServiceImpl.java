@@ -1,6 +1,5 @@
 package com.recommendation.service.impl;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -44,7 +43,6 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     private static final int DEFAULT_LIMIT = 10;
 
-    private final DataSource dataSource;
     private ItemBasedRecommender recommender;
     private final MovieRepository repo;
     private final UserRepository userRepo;
@@ -57,28 +55,10 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @param userRepo the user repository
      */
     @Autowired
-    public RecommendationServiceImpl(final DataSource dataSource, final MovieRepository repo, final UserRepository userRepo) {
+    public RecommendationServiceImpl(final ItemBasedRecommender recommender, final MovieRepository repo, final UserRepository userRepo) {
         this.repo = repo;
-        this.dataSource = dataSource;
+        this.recommender = recommender;
         this.userRepo = userRepo;
-        initRecommender();
-    }
-
-    /**
-     * Initialize the recommender with a mysql datasource
-     */
-    private void initRecommender() {
-        logger.debug("initializing mysql item similarity and preference data model.");
-        final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(dataSource);
-        final AllSimilarItemsCandidateItemsStrategy candidateStrategy = new AllSimilarItemsCandidateItemsStrategy(
-                similarity);
-        DataModel dataModel;
-		try {
-			dataModel = new ReloadFromJDBCDataModel(new MySQLJDBCDataModel(dataSource));
-	        recommender = new GenericItemBasedRecommender(dataModel, similarity,candidateStrategy, candidateStrategy);
-		} catch (TasteException e) {
-			throw new RuntimeException("Unable to create the recommender. An exception occurred", e);
-		}
     }
 
     @Override
