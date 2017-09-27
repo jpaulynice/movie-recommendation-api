@@ -56,7 +56,7 @@ API Response:
 
 Try an invalid user with id 9000:
 ```java
-GET http://localhost:8080/<some-name>/api/v1/users/9000/recommendations?limit=2
+GET http://localhost:8080/api/v1/users/9000/recommendations?limit=2
 ```
 
 Response:
