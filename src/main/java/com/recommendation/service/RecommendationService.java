@@ -1,6 +1,6 @@
 package com.recommendation.service;
 
-import java.util.SortedSet;
+import java.util.List;
 
 import com.recommendation.model.Movie;
 import com.recommendation.model.User;
@@ -12,7 +12,7 @@ import com.recommendation.model.User;
  * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
 public interface RecommendationService {
-	SortedSet<Movie> recommend(final Long userId, final int limit);
+	List<Movie> recommend(final Long userId, final int limit);
 
     User getUser(final Long id);
 }

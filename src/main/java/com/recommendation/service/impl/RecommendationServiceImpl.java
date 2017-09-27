@@ -1,8 +1,7 @@
 package com.recommendation.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.recommender.ItemBasedRecommender;
@@ -53,7 +52,7 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public SortedSet<Movie> recommend(final Long userId, int howMany) {
+    public List<Movie> recommend(final Long userId, int howMany) {
         final User user = getUser(userId);
 
         if (howMany <= 0) {
@@ -80,8 +79,8 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @param items list of recommended items
      * @return list of movie with details
      */
-    private SortedSet<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
-        final SortedSet<Movie> movies = new TreeSet<>();
+    private List<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
+        final List<Movie> movies = new ArrayList<>();
         int count = 0;
         for (final RecommendedItem item : items) {
             final Movie movie = repo.findOne(item.getItemID());

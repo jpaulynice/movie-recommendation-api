@@ -36,7 +36,7 @@ public class Movie {
     @Column(name = "type")
     @XmlElement
     private MovieGenre genre;
-    
+
     @XmlElement
     @Transient
     private int rank;
@@ -60,11 +60,9 @@ public class Movie {
     private String img;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL,
-                fetch = FetchType.LAZY)
-    @JoinTable(name = "taste_item_similarity",
-               joinColumns = { @JoinColumn(name = "item_id_a") },
-               inverseJoinColumns = { @JoinColumn(name = "item_id_b") })
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "taste_item_similarity", joinColumns = { @JoinColumn(name = "item_id_a") }, inverseJoinColumns = {
+            @JoinColumn(name = "item_id_b") })
     private Set<Movie> similarMovies = new HashSet<>();
 
     /**
@@ -103,35 +101,40 @@ public class Movie {
     }
 
     /**
-     * @param genre the genre to set
+     * @param genre
+     *            the genre to set
      */
     public void setGenre(final MovieGenre genre) {
         this.genre = genre;
     }
 
     /**
-     * @param id the id to set
+     * @param id
+     *            the id to set
      */
     public void setId(final Long id) {
         this.id = id;
     }
 
     /**
-     * @param imdb_id the imdb_id to set
+     * @param imdb_id
+     *            the imdb_id to set
      */
     public void setImdb_id(final String imdb_id) {
         this.imdb_id = imdb_id;
     }
 
     /**
-     * @param name the name to set
+     * @param name
+     *            the name to set
      */
     public void setName(final String name) {
         this.name = name;
     }
 
     /**
-     * @param similarMovies the similarMovies to set
+     * @param similarMovies
+     *            the similarMovies to set
      */
     public void setSimilarMovies(final Set<Movie> similarMovies) {
         this.similarMovies = similarMovies;
@@ -139,6 +142,7 @@ public class Movie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -151,6 +155,7 @@ public class Movie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -177,19 +182,20 @@ public class Movie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return "Movie [genre=" + genre + ", id=" + id + ", imdb_id=" + imdb_id
-                + ", name=" + name + ", img=" + img + "]";
+        return "Movie [genre=" + genre + ", id=" + id + ", imdb_id=" + imdb_id + ", name=" + name + ", img=" + img
+                + "]";
     }
 
-	public int getRank() {
-		return rank;
-	}
+    public int getRank() {
+        return rank;
+    }
 
-	public void setRank(int rank) {
-		this.rank = rank;
-	}
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
 }
