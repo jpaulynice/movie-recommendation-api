@@ -28,27 +28,27 @@ import org.springframework.context.annotation.PropertySource;
  * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
 @Configuration
-@ComponentScan(basePackages = { "com.recommendation" },
-               excludeFilters = @Filter(type = FilterType.REGEX,
-                                        pattern = "com.recommendation.config.*"))
+@ComponentScan(basePackages = {
+		"com.recommendation" }, excludeFilters = @Filter(type = FilterType.REGEX, pattern = "com.recommendation.config.*"))
 @Import({ SpringDataConfig.class })
 @PropertySource("classpath:META-INF/properties/db.properties")
 public class SpringConfig {
-    @Autowired
-    private DataSource dataSource;
-    
-    @Bean
-    public ItemBasedRecommender recommender() throws PropertyVetoException{
-        final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(dataSource);
-        final AllSimilarItemsCandidateItemsStrategy candidateStrategy = new AllSimilarItemsCandidateItemsStrategy(
-                similarity);
-        ItemBasedRecommender recommender;
-                try {
-                        DataModel dataModel = new ReloadFromJDBCDataModel(new MySQLJDBCDataModel(dataSource));
-                recommender = new GenericItemBasedRecommender(dataModel, similarity,candidateStrategy, candidateStrategy);
-                } catch (TasteException e) {
-                        throw new RuntimeException("Unable to create the recommender. An exception occurred", e);
-                }
-                
-                return recommender;
-    }}
+	@Autowired
+	private DataSource dataSource;
+
+	@Bean
+	public ItemBasedRecommender recommender() throws PropertyVetoException {
+		final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(dataSource);
+		final AllSimilarItemsCandidateItemsStrategy candidateStrategy = new AllSimilarItemsCandidateItemsStrategy(
+				similarity);
+		ItemBasedRecommender recommender;
+		try {
+			DataModel dataModel = new ReloadFromJDBCDataModel(new MySQLJDBCDataModel(dataSource));
+			recommender = new GenericItemBasedRecommender(dataModel, similarity, candidateStrategy, candidateStrategy);
+		} catch (TasteException e) {
+			throw new RuntimeException("Unable to create the recommender. An exception occurred", e);
+		}
+
+		return recommender;
+	}
+}
