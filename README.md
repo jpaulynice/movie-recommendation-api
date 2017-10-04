@@ -30,7 +30,7 @@ On Startup, the application runs these 2 scripts under: `src/main/resources/META
 2. [populate data](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/init.sql)
 
 REST API Example:
-```java
+```bash
 GET http://localhost:8080/api/v1/users/2/recommendations?limit=2
 ```
 
