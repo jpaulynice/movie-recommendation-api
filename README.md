@@ -11,7 +11,7 @@ Given:
 <ol>
     <li> A list of users</li>
     <li> A list of movies</li>
-    <li> Similarities between movie 1 and movie 2</li>
+    <li> Similarity between movie 1 and movie 2</li>
     <li> Users preferences for each movie</li>
 </ol>
 
