@@ -12,7 +12,7 @@ Given:
     <li> A list of users</li>
     <li> A list of movies</li>
     <li> Similarity between movie 1 and movie 2</li>
-    <li> Users preferences for each movie</li>
+    <li> Partial users' preferences for the movies</li>
 </ol>
 
 Recommend a set of movies that the user would enjoy.
