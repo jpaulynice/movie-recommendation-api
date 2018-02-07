@@ -12,8 +12,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.recommendation.config.SpringConfig;
-import com.recommendation.exception.UserNotFoundException;
 import com.recommendation.model.Movie;
+import com.recommendation.model.User;
 
 @ContextConfiguration(classes = SpringConfig.class)
 public class RecommendationServiceTest extends AbstractTestNGSpringContextTests {
@@ -26,18 +26,11 @@ public class RecommendationServiceTest extends AbstractTestNGSpringContextTests 
     }
 
     @Test
-    public void testGetUser() {
-        assertNotNull(service.getUser(1L));
-    }
-
-    @Test(expectedExceptions = UserNotFoundException.class)
-    public void testGetUserNotFound() {
-        service.getUser(986322222L);
-    }
-
-    @Test
     public void testGetRecomm() {
-        List<Movie> list = service.recommend(1L, 2);
+        User u = new User();
+        u.setId(1L);
+
+        List<Movie> list = service.recommend(u, 2);
 
         assertNotNull(list);
         assertEquals(list.size(), 2);
@@ -45,6 +38,6 @@ public class RecommendationServiceTest extends AbstractTestNGSpringContextTests 
         for (int i = 0; i < list.size() - 1; i++) {
             Assert.assertTrue(list.get(i).getRank() < list.get(i + 1).getRank());
         }
-        assertNotNull(service.recommend(1L, 0));
+        assertNotNull(service.recommend(u, 0));
     }
 }
