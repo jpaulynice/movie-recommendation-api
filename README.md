@@ -3,7 +3,7 @@ Movie Recommendation Engine
 [![Build Status](https://travis-ci.org/julesbond007/movie-recommendation-api.svg?branch=master)](https://travis-ci.org/julesbond007/movie-recommendation-api)
 [![Coverage Status](https://coveralls.io/repos/github/julesbond007/movie-recommendation-engine/badge.svg?branch=master)](https://coveralls.io/github/julesbond007/movie-recommendation-engine?branch=master)
 
-A simple movie recommendation engine based on Apache Mahout.  This is a Jersey REST API with persistence provided by Spring Data/Hibernate/JPA.  Although it's a simple application, it is a real recommendation engine with data stored in 2 formats:
+A simple movie recommendation engine based on Apache Mahout.  This is a Jersey REST API with persistence using Spring Data/Hibernate/JPA.  Although it's a simple application, it is a real recommendation engine with data stored in 2 formats:
 MySQL database and CSV file.  The idea is simple.
 
 Given:
