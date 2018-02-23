@@ -41,7 +41,7 @@ public class SpringDataConfig {
 
     @Bean
     EntityManagerFactory entityManagerFactory() throws NamingException,
-            PropertyVetoException {
+    PropertyVetoException {
         final HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
         adapter.setGenerateDdl(false);
 
@@ -77,8 +77,7 @@ public class SpringDataConfig {
     @Bean
     Properties hibernateProperties() {
         final Properties props = new Properties();
-        props.setProperty("hibernate.dialect",
-                "org.hibernate.dialect.MySQL5Dialect");
+        props.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         props.setProperty("hibernate.dbcp.initialSize", "5");
         props.setProperty("hibernate.dbcp.maxActive", "20");
         props.setProperty("hibernate.dbcp.maxIdle", "20");
