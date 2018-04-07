@@ -36,13 +36,6 @@ public class RecommendationServiceImpl implements RecommendationService {
     private final MovieRepository repo;
     private final UserRepository userRepo;
 
-    /**
-     * Default constructor with dataSource and movieService
-     *
-     * @param dataSource the dataSource to set
-     * @param repo the movie repository
-     * @param userRepo the user repository
-     */
     @Autowired
     public RecommendationServiceImpl(final ItemBasedRecommender recommender, final MovieRepository repo, final UserRepository userRepo) {
         this.repo = repo;

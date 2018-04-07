@@ -2,6 +2,9 @@
 --'create database recommendationdb'
 --'use recommendationdb';
 
+create database recommendationdb;
+use recommendationdb;
+
 drop table if exists taste_item_similarity;
 drop table if exists taste_preferences;
 drop table if exists users;

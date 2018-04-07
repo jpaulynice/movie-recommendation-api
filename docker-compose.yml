@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    volumes:
+      - "./build/libs/rec.war:/usr/local/tomcat/webapps/rec.war"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=Password1
+    ports:
+     - "3306:3306"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.5
+
+  recommendation-tomcat:
+    container_name: recommendation-tomcat
+    image: tomcat:latest
+    ports:
+     - "8080:8080"
+     - "8009:8009"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.6
+    depends_on:
+     - mysql
+
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
