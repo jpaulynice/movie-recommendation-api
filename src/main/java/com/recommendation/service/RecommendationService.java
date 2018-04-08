@@ -12,7 +12,5 @@ import com.recommendation.model.User;
  * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
 public interface RecommendationService {
-	List<Movie> recommend(final Long userId, final int limit);
-
-    User getUser(final Long id);
+    List<Movie> recommend(final User user, int howMany);
 }

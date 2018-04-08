@@ -13,11 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.recommendation.exception.UserNotFoundException;
 import com.recommendation.model.Movie;
 import com.recommendation.model.User;
 import com.recommendation.repository.MovieRepository;
-import com.recommendation.repository.UserRepository;
 import com.recommendation.service.RecommendationService;
 
 /**
@@ -34,36 +32,27 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     private ItemBasedRecommender recommender;
     private final MovieRepository repo;
-    private final UserRepository userRepo;
 
+    /**
+     * Default constructor with dataSource and movieService
+     *
+     * @param dataSource the dataSource to set
+     * @param repo the movie repository
+     */
     @Autowired
-    public RecommendationServiceImpl(final ItemBasedRecommender recommender, final MovieRepository repo, final UserRepository userRepo) {
+    public RecommendationServiceImpl(final ItemBasedRecommender recommender, final MovieRepository repo) {
         this.repo = repo;
         this.recommender = recommender;
-        this.userRepo = userRepo;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public List<Movie> recommend(final Long userId, int howMany) {
-        final User user = getUser(userId);
-
+    public List<Movie> recommend(final User user, int howMany) {
         if (howMany <= 0) {
             howMany = DEFAULT_LIMIT;
         }
 
         return getRecommendedMovies(getItems(user.getId(), howMany));
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public User getUser(final Long id) {
-        final User u = userRepo.findOne(id);
-        if (u == null) {
-            throw new UserNotFoundException("No user found with id: " + id);
-        }
-
-        return u;
     }
 
     /**

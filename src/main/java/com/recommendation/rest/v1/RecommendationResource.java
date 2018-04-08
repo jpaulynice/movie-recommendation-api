@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.recommendation.model.Movie;
-import com.recommendation.model.User;
 import com.recommendation.service.RecommendationService;
+import com.recommendation.service.UserService;
 
 /**
  * Jersey resource endpoint for our recommendation engine.
@@ -28,25 +28,24 @@ import com.recommendation.service.RecommendationService;
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class RecommendationResource {
     private final RecommendationService service;
+    private final UserService userService;
 
     @Autowired
-    public RecommendationResource(final RecommendationService service) {
+    public RecommendationResource(final RecommendationService service, final UserService userService) {
         this.service = service;
+        this.userService = userService;
     }
 
     @GET
     @Path("{userId}")
     public Response getUser(@PathParam("userId") final Long id) {
-        final User u = service.getUser(id);
-
-        return Response.ok(u).build();
+        return Response.ok(userService.getUser(id)).build();
     }
 
     @GET
     @Path("{userId}/recommendations")
-    public Response recommend(@PathParam("userId") final Long userId, 
-                              @QueryParam("limit") final int limit) {
-        final List<Movie> vals = service.recommend(userId, limit);
+    public Response recommend(@PathParam("userId") final Long userId, @QueryParam("limit") final int limit) {
+        final List<Movie> vals = service.recommend(userService.getUser(userId), limit);
         final GenericEntity<List<Movie>> res = new GenericEntity<List<Movie>>(vals) {};
 
         return Response.ok(res).build();
