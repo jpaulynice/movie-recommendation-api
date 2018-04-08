@@ -4,6 +4,8 @@ insert into users (name,email) values ('nate','nate.paulynice@gmail.com');
 insert into users (name,email) values ('aiden','aiden.paulynice@gmail.com');
 insert into users (name,email) values ('mella','mella.paulynice@gmail.com');
 insert into users (name,email) values ('me','me.paulynice@gmail.com');
+insert into users (name,email) values ('none','no.recommendations@gmail.com');
+
 
 /** populate movies table */
 insert into items (name,type,imdb_id, img) 

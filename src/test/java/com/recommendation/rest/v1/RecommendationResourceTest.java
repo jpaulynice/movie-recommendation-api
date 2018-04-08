@@ -37,7 +37,7 @@ public class RecommendationResourceTest extends BaseJerseyTest {
     }
 
     @Test
-    public void testGet() {
+    public void testRecommend() {
         final Response response = target("users/1/recommendations").request()
                 .get();
 
@@ -65,10 +65,24 @@ public class RecommendationResourceTest extends BaseJerseyTest {
             assertNotNull(m.hashCode());
         }
     }
+    
+    @Test
+    public void testRecommendException() {
+        final Response response = target("users/6/recommendations").request()
+                .get();
+
+        assertNotNull(response);
+        assertEquals(response.getStatus(), 400);
+        
+        final Message m = response.readEntity(Message.class);
+        assertNotNull(m);
+        assertEquals(m.getInfo(), "Unable to make recommendation for userId: 6");
+        assertNotNull(m.hashCode());
+    }
 
     @Test
     public void testGetUserNotFound() {
-        final Response response = target("users/999982828282/recommendations")
+        final Response response = target("users/999982828/recommendations")
                 .request().get();
 
         assertNotNull(response);
@@ -78,7 +92,7 @@ public class RecommendationResourceTest extends BaseJerseyTest {
         final Message m = response.readEntity(Message.class);
         assertNotNull(m);
         assertNotNull(m.toString());
-        assertEquals(m, m);
+        assertEquals(m.getInfo(), "No user found with id: "+999982828);
         assertNotNull(m.hashCode());
 
         final Message m2 = new Message(404, "blah");

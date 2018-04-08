@@ -12,6 +12,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.recommendation.config.SpringConfig;
+import com.recommendation.exception.RecommendationException;
 import com.recommendation.model.Movie;
 import com.recommendation.model.User;
 
@@ -39,5 +40,13 @@ public class RecommendationServiceTest extends AbstractTestNGSpringContextTests 
             Assert.assertTrue(list.get(i).getRank() < list.get(i + 1).getRank());
         }
         assertNotNull(service.recommend(u, 0));
+    }
+    
+    @Test(expectedExceptions = RecommendationException.class)
+    public void testGetRecException() {
+        User u = new User();
+        u.setId(9999L);
+
+        service.recommend(u, 2);
     }
 }

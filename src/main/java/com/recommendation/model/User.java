@@ -44,7 +44,7 @@ public class User {
     @JoinTable(name = "taste_preferences",
                joinColumns = { @JoinColumn(name = "user_id") },
                inverseJoinColumns = { @JoinColumn(name = "item_id") })
-    private Set<Movie> moviePreferences = new HashSet<>();
+    private final Set<Movie> moviePreferences = new HashSet<>();
 
     /**
      * create new user object
@@ -99,13 +99,6 @@ public class User {
      */
     public void setId(final Long id) {
         this.id = id;
-    }
-
-    /**
-     * @param moviePreferences the moviePreferences to set
-     */
-    public void setMoviePreferences(final Set<Movie> moviePreferences) {
-        this.moviePreferences = moviePreferences;
     }
 
     /*

@@ -37,19 +37,8 @@ public class SpringConfig {
     private DataSource dataSource;
 
     @Bean
-    public ItemBasedRecommender recommender() throws PropertyVetoException {
-        return createRecommender(getDataModel(), new MySQLJDBCInMemoryItemSimilarity(dataSource));
-    }
-
-    private DataModel getDataModel() {
-        DataModel dataModel;
-        try {
-            dataModel = new ReloadFromJDBCDataModel(new MySQLJDBCDataModel(dataSource));
-        } catch (TasteException e) {
-            throw new RuntimeException("Unable to create the dataModel for recommender. Exception: ", e);
-        }
-
-        return dataModel;
+    public ItemBasedRecommender recommender() throws PropertyVetoException, TasteException {
+        return createRecommender(new ReloadFromJDBCDataModel(new MySQLJDBCDataModel(dataSource)), new MySQLJDBCInMemoryItemSimilarity(dataSource));
     }
 
     private ItemBasedRecommender createRecommender(final DataModel dataModel,final ItemSimilarity similarity) {
