@@ -39,12 +39,11 @@ public class SpringConfig {
 	@Bean
 	public ItemBasedRecommender recommender() throws PropertyVetoException {
 		final ItemSimilarity similarity = new MySQLJDBCInMemoryItemSimilarity(dataSource);
-		final AllSimilarItemsCandidateItemsStrategy candidateStrategy = new AllSimilarItemsCandidateItemsStrategy(
-				similarity);
+		final AllSimilarItemsCandidateItemsStrategy cs = new AllSimilarItemsCandidateItemsStrategy(similarity);
 		ItemBasedRecommender recommender;
 		try {
 			DataModel dataModel = new ReloadFromJDBCDataModel(new MySQLJDBCDataModel(dataSource));
-			recommender = new GenericItemBasedRecommender(dataModel, similarity, candidateStrategy, candidateStrategy);
+			recommender = new GenericItemBasedRecommender(dataModel, similarity, cs, cs);
 		} catch (TasteException e) {
 			throw new RuntimeException("Unable to create the recommender. An exception occurred", e);
 		}

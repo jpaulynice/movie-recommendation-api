@@ -1,7 +1,6 @@
---assumes database exists if not then run the following commands:
---'create database recommendationdb'
---'use recommendationdb';
+--recreate database from scratch
 
+drop database recommendationdb;
 create database recommendationdb;
 use recommendationdb;
 
