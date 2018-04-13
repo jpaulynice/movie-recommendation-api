@@ -3,10 +3,9 @@ Movie Recommendation Engine
 [![Build Status](https://travis-ci.org/julesbond007/movie-recommendation-api.svg?branch=master)](https://travis-ci.org/julesbond007/movie-recommendation-api)
 [![Coverage Status](https://coveralls.io/repos/github/julesbond007/movie-recommendation-api/badge.svg?branch=master)](https://coveralls.io/github/julesbond007/movie-recommendation-api?branch=master)
 
-A simple movie recommendation engine based on Apache Mahout.  This is a Jersey REST API with persistence using Spring Data/Hibernate/JPA.  Although it's a simple application, it is a real recommendation engine with data stored in 2 formats:
-MySQL database and CSV file.  The idea is simple.
+A simple movie recommendation engine based on [Apache Mahout](https://mahout.apache.org/) machine library.  This is a Jersey REST API with persistence using Spring Data/Hibernate/JPA.  Although it's a simple application, it is a real recommendation engine with data stored in a MySQL database.  
 
-Given:
+The idea is simple. Given:
 
 <ol>
     <li> A list of users</li>
@@ -22,7 +21,7 @@ Setup
 1. create recommendation db: `create database recommendationdb`
 2. update [db properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties): to have correct url, user/password to mysql database
 3. run `gradle clean build`
-4. deploy api: `cp -r build/libs/movie-recommendation-engine.war $TOMCAT_HOME/webapps/api.war`
+4. deploy api: `cp -r build/libs/movie-recommendation-api.war $TOMCAT_HOME/webapps/movies.war`
 
 On Startup, the application runs these 2 scripts under: `src/main/resources/META-INF/data/sql` :
 
@@ -31,7 +30,7 @@ On Startup, the application runs these 2 scripts under: `src/main/resources/META
 
 REST API Example:
 ```bash
-GET http://localhost:8080/api/v1/users/2/recommendations?limit=2
+GET http://localhost:8080/movies/api/v1/users/2/recommendations?limit=2
 ```
 
 API Response:
@@ -56,7 +55,7 @@ API Response:
 
 Try an invalid user with id 9000:
 ```java
-GET http://localhost:8080/api/v1/users/9000/recommendations?limit=2
+GET http://localhost:8080/movies/api/v1/users/9000/recommendations?limit=2
 ```
 
 Response:
