@@ -33,7 +33,7 @@ import com.recommendation.config.SpringDataConfig;
 @ComponentScan(basePackages = { "com.recommendation" },
                excludeFilters = @Filter(type = FilterType.REGEX, pattern = "com.recommendation.config.*"))
 @Import({ SpringDataConfig.class })
-@PropertySource("classpath:META-INF/properties/db.properties")
+@PropertySource("classpath:META-INF/properties/test.properties")
 public class SpringConfigTest {
     @Autowired
     private DataSource dataSource;
