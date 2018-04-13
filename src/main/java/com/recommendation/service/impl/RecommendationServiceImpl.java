@@ -6,8 +6,6 @@ import java.util.List;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.recommender.ItemBasedRecommender;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -27,8 +25,6 @@ import com.recommendation.service.RecommendationService;
 @Service
 @Transactional
 public class RecommendationServiceImpl implements RecommendationService {
-	private final Logger logger = LoggerFactory.getLogger(getClass());
-
 	private static final int DEFAULT_LIMIT = 10;
 
 	private ItemBasedRecommender recommender;

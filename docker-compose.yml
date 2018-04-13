@@ -1,14 +1,16 @@
 version: '2'
 
 services:
-  mysql:
-    container_name: mysql
+  db:
+    container_name: mysql-container
     image: mysql:latest
-    volumes:
-      - "./build/libs/rec.war:/usr/local/tomcat/webapps/rec.war"
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=Password1
+      - MYSQL_DATABASE=recommendationdb
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      
     ports:
      - "3306:3306"
     networks:
@@ -17,6 +19,8 @@ services:
 
   recommendation-tomcat:
     container_name: recommendation-tomcat
+    volumes:
+      - "./build/libs/rec.war:/usr/local/tomcat/webapps/movies.war"
     image: tomcat:latest
     ports:
      - "8080:8080"
@@ -25,7 +29,9 @@ services:
       vpcbr:
         ipv4_address: 10.5.0.6
     depends_on:
-     - mysql
+     - db
+    links:
+     - db
 
 networks:
   vpcbr:
