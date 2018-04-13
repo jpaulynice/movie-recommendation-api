@@ -18,9 +18,10 @@ Recommend a set of movies that the user would enjoy.
 
 Setup
 -------
-1. Install docker and docker-compose if not alread installed `brew install docker && brew install docker-compose`
-3. run `./gradlew clean build -x test`
-4. run docker`docker-compose up`
+1. Install docker and docker-compose if not already installed `brew install docker && brew install docker-compose`
+2. run `./gradlew clean build -x test` to skip tests
+3. optionally run `./gradlew clean build`, update [test.properties](https://github.com/julesbond007/movie-recommendation-api/blob/master/src/main/resources/META-INF/properties/test.properties) with correct username/password to local database
+3. run docker`docker-compose up`
 
 On Startup, the application runs these 2 scripts under: `src/main/resources/META-INF/data/sql` :
 
