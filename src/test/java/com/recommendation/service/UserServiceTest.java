@@ -7,10 +7,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
-import com.recommendation.config.SpringConfig;
 import com.recommendation.exception.UserNotFoundException;
 
-@ContextConfiguration(classes = SpringConfig.class)
+@ContextConfiguration(classes = SpringConfigTest.class)
 public class UserServiceTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private UserService service;

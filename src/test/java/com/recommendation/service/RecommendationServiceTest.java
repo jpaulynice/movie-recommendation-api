@@ -11,12 +11,11 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.recommendation.config.SpringConfig;
 import com.recommendation.exception.RecommendationException;
 import com.recommendation.model.Movie;
 import com.recommendation.model.User;
 
-@ContextConfiguration(classes = SpringConfig.class)
+@ContextConfiguration(classes = SpringConfigTest.class)
 public class RecommendationServiceTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private RecommendationService service;
