@@ -18,10 +18,9 @@ Recommend a set of movies that the user would enjoy.
 
 Setup
 -------
-1. create recommendation db: `create database recommendationdb`
-2. update [db properties](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/properties/db.properties): to have correct url, user/password to mysql database
-3. run `gradle clean build`
-4. deploy api: `cp -r build/libs/movie-recommendation-api.war $TOMCAT_HOME/webapps/movies.war`
+1. Install docker and docker-compose if not alread installed `brew install docker && brew install docker-compose`
+3. run `./gradlew clean build -x test`
+4. run docker`docker-compose up`
 
 On Startup, the application runs these 2 scripts under: `src/main/resources/META-INF/data/sql` :
 
