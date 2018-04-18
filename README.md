@@ -28,7 +28,8 @@ On Startup, the application runs these 2 scripts under: `src/main/resources/META
 1. [recreate tables](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/ddl.sql)
 2. [populate data](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/init.sql)
 
-Design:
+Database schema:
+
 [<img width="300px" src="https://raw.githubusercontent.com/julesbond007/movie-recommendation-api/master/design/recommendation_tables.png">](https://raw.githubusercontent.com/julesbond007/movie-recommendation-api/master/design/recommendation_tables.png)
 
 REST API Example:
