@@ -9,6 +9,4 @@ import com.recommendation.model.Movie;
  *
  * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
-public interface MovieRepository extends CrudRepository<Movie, Long> {
-    // nothing to see here
-}
+public interface MovieRepository extends CrudRepository<Movie, Long> {}
