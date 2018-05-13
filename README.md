@@ -3,7 +3,7 @@ Movie Recommendation Engine
 [![Build Status](https://travis-ci.org/julesbond007/movie-recommendation-api.svg?branch=master)](https://travis-ci.org/julesbond007/movie-recommendation-api)
 [![Coverage Status](https://coveralls.io/repos/github/julesbond007/movie-recommendation-api/badge.svg?branch=master)](https://coveralls.io/github/julesbond007/movie-recommendation-api?branch=master)
 
-A simple movie recommendation engine based on [Apache Mahout](https://mahout.apache.org/) machine library.  This is a Jersey REST API with persistence using Spring Data/Hibernate/JPA.  Although it's a simple application, it is a real recommendation engine with data stored in a MySQL database.  
+A simple movie recommendation engine based on [Apache Mahout](https://mahout.apache.org/) machine learning library.  This is a Jersey REST API with persistence using Spring Data/Hibernate/JPA.  Although it's a simple application, it is a real recommendation engine with data stored in a MySQL database.  
 
 The idea is simple. Given:
 
@@ -27,6 +27,10 @@ On Startup, the application runs these 2 scripts under: `src/main/resources/META
 
 1. [recreate tables](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/ddl.sql)
 2. [populate data](https://github.com/julesbond007/movie-recommendation-engine/blob/master/src/main/resources/META-INF/data/sql/init.sql)
+
+Database schema:
+
+[<img width="300px" src="https://raw.githubusercontent.com/julesbond007/movie-recommendation-api/master/design/recommendation_tables.png">](https://raw.githubusercontent.com/julesbond007/movie-recommendation-api/master/design/recommendation_tables.png)
 
 REST API Example:
 ```bash
