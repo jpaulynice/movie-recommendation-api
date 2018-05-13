@@ -56,7 +56,7 @@ public class SpringDataConfig {
     }
 
     @Bean
-    public DataSource dataSource() throws PropertyVetoException {
+    public DataSource dataSource() {
         final DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName(env.getProperty("db.driver"));
         ds.setUrl(env.getProperty("db.url"));

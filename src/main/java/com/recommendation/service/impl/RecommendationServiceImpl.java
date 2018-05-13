@@ -30,14 +30,6 @@ public class RecommendationServiceImpl implements RecommendationService {
 	private ItemBasedRecommender recommender;
 	private final MovieRepository repo;
 
-	/**
-	 * Default constructor with dataSource and movieService
-	 *
-	 * @param dataSource
-	 *            the dataSource to set
-	 * @param repo
-	 *            the movie repository
-	 */
 	@Autowired
 	public RecommendationServiceImpl(final ItemBasedRecommender recommender, final MovieRepository repo) {
 		this.repo = repo;
@@ -54,13 +46,6 @@ public class RecommendationServiceImpl implements RecommendationService {
 		return getRecommendedMovies(getItems(user.getId(), howMany));
 	}
 
-	/**
-	 * For each recommended item, fetch the details from the database.
-	 *
-	 * @param items
-	 *            list of recommended items
-	 * @return list of movie with details
-	 */
 	private List<Movie> getRecommendedMovies(final List<RecommendedItem> items) {
 		final List<Movie> movies = new ArrayList<>();
 		int count = 0;

@@ -42,16 +42,20 @@ dependencies {
     compile 'ch.qos.logback:logback-core:1.1.3'
     compile 'org.slf4j:slf4j-api:1.7.13' 
     
-    compile 'org.springframework:spring-context:4.2.5.RELEASE'
-    compile 'org.springframework:spring-web:4.2.5.RELEASE'
-    compile 'org.springframework:spring-orm:4.2.5.RELEASE'
-    compile ('org.springframework.data:spring-data-jpa:1.9.4.RELEASE'){
+    compile 'org.springframework:spring-aspects:5.0.5.RELEASE'
+    compile 'org.springframework:spring-context:5.0.5.RELEASE'
+    compile 'org.springframework:spring-web:5.0.5.RELEASE'
+    compile 'org.springframework:spring-orm:5.0.5.RELEASE'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
+    
+    compile ('org.springframework.data:spring-data-jpa:1.10.5.RELEASE') {
         exclude(module: 'spring-aop')
         exclude(module: 'spring-tx')
         exclude(module: 'spring-web')
     }
-    compile 'org.hibernate:hibernate-core:5.1.0.Final'
-    compile 'org.hibernate:hibernate-entitymanager:5.1.0.Final'
+    compile 'org.hibernate:hibernate-entitymanager:5.2.4.Final'
+    compile 'org.hibernate:hibernate-core:5.2.4.Final'  
+    
     compile 'commons-dbcp:commons-dbcp:1.4'
     compile ('org.apache.mahout:mahout-integration:0.13.0'){
         exclude group: 'com.sun.jersey'
@@ -60,22 +64,27 @@ dependencies {
     
     compile 'mysql:mysql-connector-java:5.1.28'
     
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-    compile 'org.glassfish.jersey.core:jersey-client:2.22.2'
-    compile ('org.glassfish.jersey.ext:jersey-spring3:2.22.2'){
+    compile 'org.glassfish.jersey.core:jersey-client:2.27'
+    compile 'javax.servlet:javax.servlet-api:3.1.0'   
+
+    compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.27'
+    compile 'org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6'
+    compile 'org.glassfish.jersey.inject:jersey-hk2:2.27'
+    
+    compile ('org.glassfish.jersey.ext:jersey-spring4:2.27') {
         exclude(module: 'spring-aop')
         exclude(module: 'spring-tx')
         exclude(module: 'spring-web')
-        exclude(module: 'bean-validator')
+        exclude(module: 'jersey-hk2')
     }
-    compile('org.glassfish.jersey.media:jersey-media-json-jackson:2.22.2') {
+    compile('org.glassfish.jersey.media:jersey-media-json-jackson:2.27') {
         exclude group: 'org.codehaus.jackson'
     }
     
-    testCompile 'org.glassfish.jersey.containers:jersey-container-grizzly2-http:2.22.2'
-    testCompile 'org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:2.22.2'
-    testCompile 'org.glassfish.jersey.containers:jersey-container-servlet:2.22.2'
-    testCompile 'org.glassfish.jersey.test-framework:jersey-test-framework-core:2.22.2'
-    testCompile 'org.springframework:spring-test:4.2.5.RELEASE'
-    testCompile 'org.testng:testng:6.9.4'
+    testCompile 'org.glassfish.jersey.containers:jersey-container-grizzly2-http:2.27'
+    testCompile 'org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:2.27'
+    testCompile 'org.glassfish.jersey.containers:jersey-container-servlet:2.27'
+    testCompile 'org.glassfish.jersey.test-framework:jersey-test-framework-core:2.27'
+    testCompile 'org.springframework:spring-test:5.0.5.RELEASE'
+    testCompile 'org.testng:testng:6.9.13.6' 
 }
