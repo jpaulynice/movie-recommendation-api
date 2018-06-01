@@ -26,9 +26,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * Configuration for Spring Data/JPA using annotations. This assumes the
- * datasource is configured as a jndi resource as in tomcat's server.xml with
- * name {@code jndiDBresource}
+ * Configuration for Spring Data/JPA using annotations.
  *
  * @author Jay Paulynice (jay.paulynice@gmail.com)
  */
@@ -40,8 +38,7 @@ public class SpringDataConfig {
     private Environment env;
 
     @Bean
-    EntityManagerFactory entityManagerFactory() throws NamingException,
-    PropertyVetoException {
+    EntityManagerFactory entityManagerFactory() throws NamingException, PropertyVetoException {
         final HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
         adapter.setGenerateDdl(false);
 
